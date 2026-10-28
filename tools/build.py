@@ -15,7 +15,7 @@ What it does (safe to run again and again):
 The site works without running this. Run it before publishing, with the
 address the site will live at, so search engines get correct absolute URLs.
 """
-import argparse, datetime, html, json, os, re, sys
+import hashlib, argparse, datetime, html, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -440,7 +440,13 @@ def update_sw():
                 continue
             files.append((rel + '/' + f).lstrip('/'))
     files = ['./', 'manifest.webmanifest'] + sorted(f for f in set(files) if f != 'manifest.webmanifest')
-    s = re.sub(r"const VERSION = '[^']*';", f"const VERSION = 'corpus-v5-{TODAY}';", s)
+    # the version carries a fingerprint of every cached file, so any change, even twice in a day,
+    # makes browsers fetch the new files instead of serving the old copy from cache
+    h = hashlib.sha256()
+    for f in files:
+        fp = os.path.join(ROOT, 'index.html' if f == './' else f)
+        if os.path.isfile(fp): h.update(f.encode()); h.update(open(fp, 'rb').read())
+    s = re.sub(r"const VERSION = '[^']*';", f"const VERSION = 'corpus-v5-{TODAY}-{h.hexdigest()[:8]}';", s)
     s = re.sub(r'const FILES = \[.*?\];', lambda m: 'const FILES = ' + json.dumps(files, indent=2) + ';', s, flags=re.S)
     open(p, 'w', encoding='utf-8').write(s)
     return len(files)

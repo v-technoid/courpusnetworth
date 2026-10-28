@@ -392,21 +392,36 @@
   const moneyBox = document.getElementById('lpMoney');
   let wordTimer = null, picked = false;
   function setWord(w){
-    const cur = moneyBox.querySelector('.lp-money-word:not(.out)');
+    // keep only the word now showing; anything left over from an earlier swap goes at once,
+    // so two words can never sit on top of each other (this happened after a hidden tab caught up)
+    const words = [...moneyBox.querySelectorAll('.lp-money-word')];
+    const cur = words.filter(x => !x.classList.contains('out')).pop() || null;
+    words.forEach(x => { if(x !== cur) x.remove(); });
     if(cur && cur.textContent === w) return;
-    const next = document.createElement('span'); next.className = 'lp-money-word in'; next.textContent = w;
+    const next = document.createElement('span'); next.className = 'lp-money-word'; next.textContent = w;
+    if(reduce || document.hidden || !cur){
+      if(cur) cur.remove();
+      moneyBox.appendChild(next); moneyBox.style.width = '';
+      return;
+    }
+    next.classList.add('in');
     moneyBox.appendChild(next);
-    const width = next.getBoundingClientRect().width;
-    moneyBox.style.width = (cur ? cur.getBoundingClientRect().width : width) + 'px';
-    requestAnimationFrame(() => { moneyBox.style.width = width + 'px'; next.classList.remove('in'); if(cur) cur.classList.add('out'); });
-    setTimeout(() => { if(cur) cur.remove(); }, reduce ? 0 : 560);
+    moneyBox.style.width = cur.getBoundingClientRect().width + 'px';
+    const width = next.getBoundingClientRect().width;   // also forces the start position to apply
+    moneyBox.style.width = width + 'px';
+    next.classList.remove('in'); cur.classList.add('out');
+    setTimeout(() => cur.remove(), 600);
   }
   function cycleWords(){
+    clearInterval(wordTimer);
     if(reduce || picked) return;
     const seq = ['rupee', 'dollar', 'pound', 'dirham'];
-    let i = Math.max(0, seq.indexOf(WORDS[code]));
-    wordTimer = setInterval(() => { if(picked){ clearInterval(wordTimer); return; } i = (i + 1) % seq.length; setWord(seq[i]); }, 2400);
+    const now = moneyBox.querySelector('.lp-money-word:not(.out)');
+    let i = Math.max(0, seq.indexOf(now ? now.textContent : WORDS[code]));
+    wordTimer = setInterval(() => { if(picked || document.hidden) return; i = (i + 1) % seq.length; setWord(seq[i]); }, 2400);
   }
+  // stop the cycle while the tab is hidden and start it fresh when it is back
+  document.addEventListener('visibilitychange', () => { if(document.hidden) clearInterval(wordTimer); else cycleWords(); });
 
   /* ---------- country chips ---------- */
   const chips = document.getElementById('lpCountries');
