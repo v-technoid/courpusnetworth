@@ -203,6 +203,8 @@ def shell(title, main, scripts='<script src="js/storage.js"></script>\n<script s
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(title)}</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">

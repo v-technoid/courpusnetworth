@@ -6,7 +6,7 @@
    cached here, it stays in your browser's own storage.
    Live price lookups always go to the network.
 =========================================================== */
-const VERSION = 'corpus-v5-2026-10-28-603a1792';
+const VERSION = 'corpus-v5-2026-10-28-18aa6f9f';
 const FILES = [
   "./",
   "manifest.webmanifest",
@@ -44,6 +44,7 @@ const FILES = [
   "disputes.html",
   "emi-calculator.html",
   "faq.html",
+  "favicon.ico",
   "fire-calculator.html",
   "fonts/bricolage-grotesque-latin-ext-standard-normal.woff2",
   "fonts/bricolage-grotesque-latin-standard-normal.woff2",
