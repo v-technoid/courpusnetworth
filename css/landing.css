@@ -262,6 +262,11 @@ html:has(body.lp){ overflow-x: hidden; scroll-behavior: smooth; }
 .lp-more a{ color: var(--accent); font-weight: 700; text-decoration: none; }
 .lp-more a:hover{ text-decoration: underline; }
 
+/* ---------- footer: copyright line ---------- */
+.lp-footer-legal{ width: 100%; display:flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; padding-top: 18px; margin-top: 6px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 12.5px; }
+.lp-footer-legal a{ color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.lp-footer-legal a:hover{ color: var(--ink); }
+
 /* ---------- footer columns ---------- */
 .lp-footer-cols{ display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; width: 100%; padding-top: 12px; }
 .lp-footer-cols h3{ font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); margin: 0 0 10px; font-family: var(--sans); font-weight: 700; }
@@ -323,9 +328,9 @@ html:has(body.lp){ overflow-x: hidden; scroll-behavior: smooth; }
 .pb-wrap .pb, .pb-wrap .pb-replay{ position: relative; z-index: 1; }
 
 @media (max-width: 640px){
-  .lp-countries{ flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -18px; padding: 2px 18px 8px; scrollbar-width: none; max-width: none; }
-  .lp-countries::-webkit-scrollbar{ display: none; }
-  .lp-cty{ scroll-snap-align: start; flex: none; }
+  /* phones: the chips wrap onto more rows instead of hiding off the side of the screen */
+  .lp-countries{ gap: 7px; max-width: none; }
+  .lp-cty{ padding: 5px 11px 5px 5px; gap: 7px; font-size: 13px; }
   .lp-orbit{ inset: -20px -8px; }
   .lp-orbit span{ font-size: 22px !important; }
 }
