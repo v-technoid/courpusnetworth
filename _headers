@@ -1,12 +1,16 @@
 # Security and caching headers for Netlify and Cloudflare Pages.
 # (GitHub Pages ignores this file; the site still works without it.)
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' blob: data: https://api.mfapi.in https://api.coingecko.com https://api.frankfurter.dev https://api.goldprice.dev https://www.alphavantage.co https://finnhub.io https://eodhd.com; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://static.cloudflareinsights.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' blob: data: https://api.mfapi.in https://api.coingecko.com https://api.frankfurter.dev https://api.goldprice.dev https://www.alphavantage.co https://finnhub.io https://eodhd.com https://cloudflareinsights.com; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
   X-Frame-Options: DENY
+
+# Home page: point AI tools and crawlers to the plain summary and the page list
+/
+  Link: </llms.txt>; rel="describedby"; type="text/markdown", </sitemap.xml>; rel="sitemap"; type="application/xml"
 
 /sw.js
   Cache-Control: no-cache

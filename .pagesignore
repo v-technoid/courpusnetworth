@@ -13,6 +13,9 @@ README.md
 .vscode/
 .vercelignore
 vercel.json
+wrangler.jsonc
+wrangler.toml
+.wrangler/
 __pycache__/
 *.py
 *.pyc

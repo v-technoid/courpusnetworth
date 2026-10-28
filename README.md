@@ -252,7 +252,7 @@ What is in place for search:
 - Eight standalone calculator pages (SIP, XIRR, income tax, freelancer
   tax, HRA, FIRE, EMI, gratuity), each with an explanation, a worked
   example, questions and related links.
-- `faq.html` with 26 questions and FAQPage markup. The landing page shows 8 of them with short answers linking to the full ones, without markup, since Google asks for one marked up copy per site (and has retired FAQ rich results).
+- `faq.html` with 31 questions and FAQPage markup. The landing page shows 8 of them with short answers linking to the full ones, without markup, since Google asks for one marked up copy per site (and has retired FAQ rich results).
 - `about.html`, `privacy.html`, a `404.html`, breadcrumbs, a 1200×630
   social image (`assets/og-image.png`), `hreflang` for en-IN.
 - `_headers` (Netlify, Cloudflare Pages) sets a strict Content Security
@@ -261,6 +261,18 @@ What is in place for search:
 
 FAQ text lives in `tools/faq_data.py` and calculator page text in
 `tools/calc_pages.py`; edit there and run the build again.
+
+## Visitor counts
+
+The site uses Cloudflare Web Analytics, switched on in the Cloudflare
+Pages project (Metrics, Web Analytics), which adds its script at deploy
+time. It counts visits, pages, referrers, countries, devices and page
+speed, uses no cookies and never sees what people enter. `_headers`
+allows `static.cloudflareinsights.com` (script) and
+`cloudflareinsights.com` (beacon) in the Content Security Policy; without
+those the counter is silently blocked. It has no custom events, so button
+clicks are not counted. The privacy page, About page and FAQ
+(`visitor-counts`) describe this.
 
 ## Countries
 
