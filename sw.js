@@ -6,7 +6,7 @@
    cached here, it stays in your browser's own storage.
    Live price lookups always go to the network.
 =========================================================== */
-const VERSION = 'corpus-v5-2026-10-28-18aa6f9f';
+const VERSION = 'corpus-v5-2026-10-28-39517e8a';
 const FILES = [
   "./",
   "manifest.webmanifest",
