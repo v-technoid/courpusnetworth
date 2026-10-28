@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Dashboard | CO₹PU$</title>
+<meta name="description" content="Your net worth, health score, allocation and upcoming dates.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://corpusnetworth.in/dashboard">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Dashboard | CO₹PU$">
+<meta property="og:description" content="Your net worth, health score, allocation and upcoming dates.">
+<meta property="og:url" content="https://corpusnetworth.in/dashboard">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dashboard | CO₹PU$">
+<meta name="twitter:description" content="Your net worth, health score, allocation and upcoming dates.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head page-head-row">
+      <div>
+        <h1 id="greeting">Dashboard</h1>
+        <p>A running picture of what you own, what you owe, and what that leaves you with.</p>
+      </div>
+      <button type="button" class="secondary" data-pdf-report><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>PDF report</button>
+    </div>
+
+    <div id="welcome" class="card" hidden>
+      <h2>Let's Build Your Ledger</h2>
+      <p class="muted">Nothing is saved yet. The fastest start: drop in a payslip, bank statement or holdings file and let it fill things in. Or add things by hand below.</p>
+      <a class="btn" href="import.html" style="margin-top:14px; display:inline-flex; gap:8px; align-items:center;">Import a document</a>
+      <div class="grid-3" style="margin-top:16px;">
+        <a class="advice good" href="assets.html" style="text-decoration:none;"><h4>1. Add what you own</h4><p id="welcomeOwn">PPF, EPF, FDs, stocks, funds, gold, property…</p></a>
+        <a class="advice info" href="liabilities.html" style="text-decoration:none;"><h4>2. Add what you owe</h4><p>Home, car or personal loans and card balances.</p></a>
+        <a class="advice warn" href="insurance.html" id="welcomeThird" style="text-decoration:none;"><h4>3. Check your cover</h4><p>See how much term and health cover fits you.</p></a>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-tile hero">
+        <div class="stat-label">Net worth</div>
+        <div class="stat-num" id="netWorth">—</div>
+        <div class="stat-sub" id="netWorthDelta">&nbsp;</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Total assets</div>
+        <div class="stat-num" id="totalAssets">—</div>
+        <div class="stat-sub" id="assetCount">&nbsp;</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Total liabilities</div>
+        <div class="stat-num" id="totalLiabilities">—</div>
+        <div class="stat-sub" id="debtRatio">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="card health" id="health">
+      <div class="health-ring" id="healthRing" aria-hidden="true"></div>
+      <div class="health-body">
+        <div class="card-head" style="margin-bottom:6px;">
+          <div><h2 style="margin-bottom:2px;">Financial Health</h2><p class="hint" style="margin:0" id="healthSummary"></p></div>
+        </div>
+        <div id="healthParts" class="health-parts"></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head">
+          <h2>Where Your Money Sits</h2>
+          <button class="link viz-toggle" id="allocToggle" type="button"></button>
+        </div>
+        <div id="allocDonut"></div>
+        <div id="allocTable"></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Net Worth Over Time</h2>
+          <a class="link" href="charts.html" style="font-size:13px; font-weight:600; color:var(--accent); text-decoration:none;">All charts →</a>
+        </div>
+        <div id="netWorthTrend"></div>
+        <p class="hint" style="margin-top:10px;">A point is saved each day you open the dashboard, kept only on this device.</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2>Monthly Cash Flow</h2>
+        <div class="kv"><span>Rent coming in</span><span id="cfRent">—</span></div>
+        <div class="kv"><span>Loan EMIs going out</span><span id="cfEmi">—</span></div>
+        <div class="kv"><span>Minimum debt payments</span><span id="cfDebt">—</span></div>
+        <div class="kv"><span><strong>Left over each month</strong></span><span id="cashFlow">—</span></div>
+        <p class="hint">Your salary is not part of this, it shows what your property and loans add or take each month.</p>
+      </div>
+      <div class="card" id="upcomingCard">
+        <div class="card-head">
+          <h2>Coming Up</h2>
+          <button type="button" class="secondary" id="icsBtn">Add to calendar</button>
+        </div>
+        <div id="upcoming"></div>
+        <p class="hint" style="margin-top:10px;">Deposit maturities, policy renewals and tax dates for the next four months. The calendar file covers the next year.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>Quick Insights</h2>
+        <a href="reports.html" class="btn secondary">Full report</a>
+      </div>
+      <div id="quickAdvice"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/compute.js"></script>
+<script src="js/advice.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/report-pdf.js"></script>
+<script>
+(function(){
+  const s = computeSummary();
+  const currency = s.c.settings.currency;
+
+  const h = new Date().getHours();
+  document.getElementById('greeting').textContent = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+
+  const hasData = s.totalAssets > 0 || s.totalLiabilities > 0;
+  if(window.CorpusCountry && !CorpusCountry.isIndia()){
+    const P = CorpusCountry.get();
+    document.getElementById('welcomeOwn').textContent = `Bank balances, ${P.retire ? P.retire.label : 'savings'}, ${P.fdLabel.toLowerCase()}, stocks, funds, property…`;
+    const third = document.getElementById('welcomeThird');
+    third.href = 'calculators.html#tax';
+    third.innerHTML = `<h4>3. Check your tax for ${/^\d/.test(P.taxYear) ? P.taxYear : P.taxYear.charAt(0).toLowerCase() + P.taxYear.slice(1)}</h4><p>Take-home pay${P.tax.brackets.length > 1 ? ', tax by band' : ''} and self-employed tax for ${P.short}.</p>`;
+  }
+  document.getElementById('welcome').hidden = hasData;
+
+  const nwEl = document.getElementById('netWorth');
+  nwEl.className = 'stat-num ' + (s.netWorth >= 0 ? '' : 'neg');
+  animateCountUp(nwEl, s.netWorth, v => fmtMoney(Math.round(v), currency));
+  animateCountUp(document.getElementById('totalAssets'), s.totalAssets, v => fmtCompact(v, currency));
+  animateCountUp(document.getElementById('totalLiabilities'), s.totalLiabilities, v => fmtCompact(v, currency));
+
+  const holdings = Object.keys(ASSET_TYPE_LABELS).reduce((n, k) => n + (s.c[k] ? s.c[k].length : 0), 0);
+  document.getElementById('assetCount').textContent = holdings ? `${holdings} holding${holdings === 1 ? '' : 's'} across ${s.classTotals.filter(c => c.value > 0).length} classes` : 'Nothing added yet';
+  document.getElementById('debtRatio').textContent = s.totalAssets > 0
+    ? `${(s.totalLiabilities / s.totalAssets * 100).toFixed(0)}% of what you own`
+    : (s.totalLiabilities > 0 ? 'No assets on record' : 'No loans or debts');
+
+  // history: save today's point, then show change against roughly a month ago
+  const history = hasData ? recordHistorySnapshot({ netWorth: s.netWorth, totalAssets: s.totalAssets, totalLiabilities: s.totalLiabilities }) : loadData().history;
+  if(history.length >= 2){
+    const monthAgo = localISO(Date.now() - 30 * 864e5);
+    const base = [...history].reverse().find(p => p.date <= monthAgo) || history[0];
+    const diff = s.netWorth - base.netWorth;
+    const el = document.getElementById('netWorthDelta');
+    el.innerHTML = `<span class="pill ${diff >= 0 ? 'moss' : 'brick'}">${diff >= 0 ? '▲ +' : '▼ −'}${escapeHtml(fmtCompact(Math.abs(diff), currency))}</span> since ${escapeHtml(new Date(base.date).toLocaleDateString('en-IN', { day:'numeric', month:'short' }))}`;
+  }
+
+  // allocation donut by asset class, with a table view
+  const segs = s.classTotals.map(c => ({ label: c.label, value: c.value, color: c.color }));
+  CorpusCharts.donut('allocDonut', segs, { centerLabel: 'Total assets', centerValue: fmtCompact(s.totalAssets, currency), ariaLabel: 'Assets by class' });
+  CorpusCharts.table('allocTable',
+    [{ key:'label', label:'Class' }, { key:'value', label:'Value', num:true, format: v => fmtMoney(v) }, { key:'pct', label:'Share', num:true }],
+    s.classTotals.filter(c => c.value > 0).map(c => ({ label: c.label, value: c.value, pct: (c.value / s.totalAssets * 100).toFixed(1) + '%' })));
+  CorpusCharts.toggle('allocToggle', 'allocDonut', 'allocTable');
+
+  CorpusCharts.line('netWorthTrend',
+    [{ name: 'Net worth', color: 'var(--accent)', points: history.map(p => ({ x: new Date(p.date).getTime(), y: p.netWorth })) }],
+    { height: 230, xFormat: x => new Date(x).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }),
+      xTickFormat: x => new Date(x).toLocaleDateString('en-IN', { month:'short', year:'2-digit' }),
+      emptyText: 'Your trend line starts tomorrow, one point is saved for each day you visit.', ariaLabel: 'Net worth over time' });
+
+  // cash flow
+  document.getElementById('cfRent').textContent = fmtMoney(Math.round(s.monthlyRental), currency);
+  document.getElementById('cfEmi').textContent = '−' + fmtMoney(Math.round(s.monthlyEmiOutgo), currency);
+  document.getElementById('cfDebt').textContent = '−' + fmtMoney(Math.round(s.monthlyDebtMin), currency);
+  const cf = document.getElementById('cashFlow');
+  cf.textContent = fmtMoney(Math.round(s.monthlyCashFlow), currency);
+  cf.style.color = s.monthlyCashFlow >= 0 ? 'var(--pos)' : 'var(--neg)';
+
+  // coming up in the next 120 days: deposits, renewals and tax dates
+  const up = allUpcoming(120);
+  const upBox = document.getElementById('upcoming');
+  const kindIcon = { tax: 'tax', maturity: 'assets', renewal: 'insurance' };
+  if(!up.length){
+    upBox.innerHTML = '<p class="empty">Nothing due in the next four months.</p>';
+  }else{
+    upBox.innerHTML = up.slice(0, 6).map(e => `
+      <div class="kv up-row"><span class="up-ic">${CORPUS_ICON(kindIcon[e.kind] || 'dashboard')}</span><span style="flex:1"><strong style="color:var(--ink)">${escapeHtml(e.title)}</strong><br><span class="hint" style="margin:0">${escapeHtml(e.detail)}</span></span>
+      <span><span class="pill ${e.days <= 30 ? 'gold' : 'plain'}">${e.days === 0 ? 'Today' : new Date(e.date + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span></span></div>`).join('');
+  }
+  document.getElementById('icsBtn').addEventListener('click', () => {
+    const events = allUpcoming(366);
+    downloadFile('corpus-reminders.ics', buildIcs(events), 'text/calendar');
+    showToast(`Calendar file with ${events.length} reminders downloaded. Open it to add them to your calendar.`);
+  });
+
+  // financial health score
+  const hs = healthScore();
+  const ring = document.getElementById('healthRing');
+  const R = 52, C = 2 * Math.PI * R, frac = hs.total / 100;
+  ring.innerHTML = `<svg viewBox="0 0 128 128" width="128" height="128"><circle cx="64" cy="64" r="${R}" fill="none" stroke="var(--surface-3)" stroke-width="12"/>
+    <circle class="health-arc" cx="64" cy="64" r="${R}" fill="none" stroke="var(--brand)" stroke-width="12" stroke-linecap="round"
+      stroke-dasharray="${C}" stroke-dashoffset="${C}" transform="rotate(-90 64 64)" style="--target:${C * (1 - frac)}"/></svg>
+    <div class="health-num"><span class="num" id="healthNum">0</span><small>of 100</small></div>`;
+  requestAnimationFrame(() => { const a = ring.querySelector('.health-arc'); a.style.transition = 'stroke-dashoffset 1.1s cubic-bezier(.22,.9,.3,1)'; a.style.strokeDashoffset = C * (1 - frac); });
+  animateCountUp(document.getElementById('healthNum'), hs.total, v => String(Math.round(v)));
+  document.getElementById('healthSummary').textContent = `${hs.band}. ` + (hs.missing ? `${hs.missing} of 5 checks need more information to score fully.` : 'Based on five plain checks, 20 points each.');
+  document.getElementById('healthParts').innerHTML = hs.parts.map(p => `
+    <a class="hp" href="${p.link}">
+      <span class="hp-top"><span class="hp-label">${escapeHtml(p.label)}</span><span class="hp-pts">${p.points}<small>/20</small></span></span>
+      <span class="hp-bar"><span style="width:${p.points / 20 * 100}%"></span></span>
+      <span class="hp-status">${escapeHtml(p.status)}</span>
+      <span class="hp-tip">${escapeHtml(p.tip)}</span>
+    </a>`).join('');
+
+  const adviceBox = document.getElementById('quickAdvice');
+  generateAdvice().slice(0, 3).forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = 'advice ' + a.level;
+    div.style.animationDelay = (0.05 * i) + 's';
+    div.innerHTML = `<h4>${escapeHtml(a.title)}</h4><p>${escapeHtml(a.text)}</p>`;
+    adviceBox.appendChild(div);
+  });
+})();
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

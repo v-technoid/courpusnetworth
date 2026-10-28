@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>About CO₹PU$: How It Works Without a Server</title>
+<meta name="description" content="Why CO₹PU$ runs entirely in your browser, how numbers and tax rules are worked out, where live prices come from, and the open source libraries it uses.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://corpusnetworth.in/about">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="About CO₹PU$: How It Works Without a Server">
+<meta property="og:description" content="Why CO₹PU$ runs entirely in your browser, how numbers and tax rules are worked out, where live prices come from, and the open source libraries it uses.">
+<meta property="og:url" content="https://corpusnetworth.in/about">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About CO₹PU$: How It Works Without a Server">
+<meta name="twitter:description" content="Why CO₹PU$ runs entirely in your browser, how numbers and tax rules are worked out, where live prices come from, and the open source libraries it uses.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://corpusnetworth.in/#org","name":"CO₹PU$","alternateName":"Corpus","url":"https://corpusnetworth.in/","logo":"https://corpusnetworth.in/assets/icon-512.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://corpusnetworth.in/"},{"@type":"ListItem","position":2,"name":"About","item":"https://corpusnetworth.in/about"}]}]}</script>
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem("corpus_theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">About</li></ol></nav>
+    <div class="page-head">
+      <h1>About CO₹PU$</h1>
+      <p>A private net worth tracker and money planner for India, the USA, UK, Canada, Australia, Singapore, the UAE and New Zealand, built to run entirely in your browser.</p>
+    </div>
+    <div class="card prose">
+      <h2>What It Is</h2>
+      <p>CO₹PU$ (say it “corpus”) adds up everything you own and owe into one number, explains where money is leaking, and gives you the calculators households actually need: SIP, XIRR, EMI, FIRE, income tax for each country, and in India PPF, Sukanya, old versus new regime, HRA, gratuity and presumptive tax for freelancers. You can type your numbers in or import a payslip, tax form, bank statement, invoice list, broker holdings or fund statement, and in India Form 16, Form 26AS, mutual fund CAS or an EPF passbook.</p>
+      <h2>Why It Works This Way</h2>
+      <p>Most money apps ask you to sign up, link your bank and hand your financial life to a company’s server. CO₹PU$ takes the opposite approach. There is <strong>no backend at all</strong>: no server, no database, no account, no analytics and no AI service. The site is a set of static files, and everything you enter is saved only in your own browser.</p>
+      <h2>How the Numbers Are Worked Out</h2>
+      <ul>
+        <li><strong>Plain rules, shown in full.</strong> Every insight is a readable rule, for example “an emergency fund should cover six months of expenses”, with the arithmetic shown.</li>
+        <li><strong>Current Indian rules.</strong> Tax figures follow the Income-tax Act 2025 for the tax year 2026-27 (slabs unchanged by Budget 2026), checked in October 2026. Renumbered sections show both numbers, such as section 58 (old 44ADA).</li>
+        <li><strong>Documents read on your device.</strong> PDFs are read with pdf.js, spreadsheets with a small built in reader, and photos with Tesseract, all bundled with the site and running offline.</li>
+      </ul>
+      <h2>Live Prices</h2>
+      <p>When you press refresh, the browser asks these free public services directly, sending only a fund code, ticker or currency pair: <a href="https://www.mfapi.in/" rel="noopener">mfapi.in</a> for mutual fund NAVs, <a href="https://goldprice.dev/" rel="noopener">goldprice.dev</a> for gold and silver, <a href="https://www.coingecko.com/" rel="noopener">CoinGecko</a> for crypto, <a href="https://frankfurter.dev/" rel="noopener">Frankfurter</a> (European Central Bank rates) for currencies, and <a href="https://www.alphavantage.co/" rel="noopener">Alpha Vantage</a> or <a href="https://finnhub.io/" rel="noopener">Finnhub</a> or <a href="https://eodhd.com/" rel="noopener">EODHD</a> for stocks using your own free key.</p>
+      <h2>Not Financial Advice</h2>
+      <p>CO₹PU$ is an educational tool. It does careful arithmetic and explains its reasoning, but it does not know everything about your situation. For decisions involving real money, confirm with a chartered accountant or a SEBI registered investment adviser.</p>
+      <h2>Open Source Libraries</h2>
+      <p>pdf.js (Apache 2.0), Tesseract.js (Apache 2.0), fflate (MIT), Bricolage Grotesque and Inter fonts (SIL Open Font License). Licence files are included with the site.</p>
+      <p><a href="privacy.html">Read the privacy policy</a> · <a href="faq.html">Frequently asked questions</a></p>
+    </div>
+  </main>
+</div>
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script>if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}</script>
+</body>
+</html>

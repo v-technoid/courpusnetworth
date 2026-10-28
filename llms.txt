@@ -1,0 +1,23 @@
+# CO₹PU$
+
+> A free, private net worth tracker and money planner for India, the USA, UK, Canada, Australia, Singapore, the UAE and New Zealand that runs entirely in the browser, with each country's current tax rules built in. No server, no account, no AI service. Users add or import their payslips, tax forms, bank statements, invoices, broker holdings and fund statements (in India also Form 16, Form 26AS, mutual fund CAS and EPF passbooks); files are read offline on the device and never uploaded.
+
+Tax figures follow the Income-tax Act 2025 for tax year 2026-27 (checked October 2026). Renumbered sections are shown with their old numbers, for example section 58 (old 44ADA) and section 393 (old 194J).
+
+## Main pages
+- [Home](https://corpusnetworth.in/): what it does and why it is private
+- [Import documents](https://corpusnetworth.in/import.html): payslip, Form 16, bank statement, invoices, 26AS/AIS, CAS, holdings and EPF passbook reader
+- [Calculators](https://corpusnetworth.in/calculators.html): 22 calculators for investing, loans, tax and planning
+- [FAQ](https://corpusnetworth.in/faq.html): privacy, imports, tax, freelancers
+- [Privacy policy](https://corpusnetworth.in/privacy.html)
+- [About](https://corpusnetworth.in/about.html)
+
+## Calculators
+- [SIP Calculator](https://corpusnetworth.in/sip-calculator.html): Find out what a fixed monthly investment in a mutual fund can grow to, and how much of the final amount is your own money versus returns.
+- [XIRR Calculator](https://corpusnetworth.in/xirr-calculator.html): Work out the real yearly return on money that went in and came out on different dates, like a SIP, top ups or partial withdrawals.
+- [Income Tax Calculator, Old vs New Regime](https://corpusnetworth.in/income-tax-calculator.html): Compare your tax under both regimes for the tax year 2026-27, the first year under the Income-tax Act 2025. Slabs are unchanged by Budget 2026.
+- [Freelancer and Consultant Tax Calculator](https://corpusnetworth.in/freelancer-tax-calculator.html): See your tax as a freelancer or consultant under presumptive taxation and under actual profit, after the TDS your clients already deducted.
+- [HRA Exemption Calculator](https://corpusnetworth.in/hra-calculator.html): Work out how much of your house rent allowance is tax free under the old regime, from your basic salary, HRA and the rent you pay.
+- [FIRE Calculator](https://corpusnetworth.in/fire-calculator.html): Find the amount you need to stop depending on a salary, adjusted for Indian inflation, and the monthly investment that gets you there.
+- [EMI Calculator](https://corpusnetworth.in/emi-calculator.html): Work out the monthly instalment on a home, car or personal loan, and how much you pay in interest over the full term.
+- [Gratuity Calculator](https://corpusnetworth.in/gratuity-calculator.html): Work out the gratuity you receive when you leave a job, and how much of it is tax free.

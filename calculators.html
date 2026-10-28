@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>22 Free Financial Calculators: SIP, XIRR, Income Tax, EMI, FIRE | CO₹PU$</title>
+<meta name="description" content="SIP, step up SIP, XIRR, CAGR, PPF, Sukanya, FIRE, EMI, prepayment, old vs new income tax, HRA, gratuity, freelancer tax and more. Free, private, explained in plain words.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://corpusnetworth.in/calculators">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="22 Free Financial Calculators: SIP, XIRR, Income Tax, EMI, FIRE | CO₹PU$">
+<meta property="og:description" content="SIP, step up SIP, XIRR, CAGR, PPF, Sukanya, FIRE, EMI, prepayment, old vs new income tax, HRA, gratuity, freelancer tax and more. Free, private, explained in plain words.">
+<meta property="og:url" content="https://corpusnetworth.in/calculators">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="22 Free Financial Calculators: SIP, XIRR, Income Tax, EMI, FIRE | CO₹PU$">
+<meta name="twitter:description" content="SIP, step up SIP, XIRR, CAGR, PPF, Sukanya, FIRE, EMI, prepayment, old vs new income tax, HRA, gratuity, freelancer tax and more. Free, private, explained in plain words.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://corpusnetworth.in/#org","name":"CO₹PU$","alternateName":"Corpus","url":"https://corpusnetworth.in/","logo":"https://corpusnetworth.in/assets/icon-512.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://corpusnetworth.in/"},{"@type":"ListItem","position":2,"name":"Calculators","item":"https://corpusnetworth.in/calculators"}]},{"@type":"WebApplication","name":"22 Free Financial Calculators: SIP, XIRR, Income Tax, EMI, FIRE","url":"https://corpusnetworth.in/calculators.html","description":"SIP, step up SIP, XIRR, CAGR, PPF, Sukanya, FIRE, EMI, prepayment, old vs new income tax, HRA, gratuity, freelancer tax and more. Free, private, explained in plain words.","applicationCategory":"FinanceApplication","operatingSystem":"Any (runs in a web browser)","browserRequirements":"Requires JavaScript","inLanguage":"en-IN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"publisher":{"@id":"https://corpusnetworth.in/#org"}}]}</script>
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>Calculators</h1>
+      <p>Twenty-two tools for the numbers that come up again and again. None of them need anything saved in Assets, so use them for any what-if question.</p>
+    </div>
+
+    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:20px;">
+      <div class="tabs" id="calcTabs" style="margin:0;"></div>
+      <div class="search" style="flex:1; min-width:220px; max-width:340px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="calcSearch" placeholder="Search calculators, e.g. tax, SIP, EMI" aria-label="Search calculators">
+      </div>
+    </div>
+
+    <section class="calc-group" data-cat="invest" data-label="Investing">
+      <div class="grid-2 calc-grid">
+      <div class="card" id="card_sip">
+        <h2>SIP</h2>
+        <p class="hint" style="margin-top:0;">What a fixed monthly investment grows to, with a chart of money put in against its value.</p>
+        <div class="form-row"><div><label for="sip_m">Monthly investment</label><input type="number" id="sip_m" value="10000" inputmode="decimal"></div><div><label for="sip_r">Expected return (% per year)</label><input type="number" id="sip_r" value="12" step="0.1" inputmode="decimal"></div></div><div class="form-row"><div><label for="sip_y">Years</label><input type="number" id="sip_y" value="15" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runSip()">Calculate</button>
+        <div class="result-box" id="sip_out" style="display:none;"></div><div id="sip_chart" style="margin-top:14px;"></div>
+      </div>
+      <div class="card" id="card_stepup">
+        <h2>Step-Up SIP</h2>
+        <p class="hint" style="margin-top:0;">A SIP that rises every year as your salary does, compared with keeping it flat.</p>
+        <div class="form-row"><div><label for="su_m">Starting monthly investment</label><input type="number" id="su_m" value="10000" inputmode="decimal"></div><div><label for="su_s">Increase each year (%)</label><input type="number" id="su_s" value="10" step="0.5" inputmode="decimal"></div></div><div class="form-row"><div><label for="su_r">Expected return (% per year)</label><input type="number" id="su_r" value="12" step="0.1" inputmode="decimal"></div><div><label for="su_y">Years</label><input type="number" id="su_y" value="15" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runStepUp()">Calculate</button>
+        <div class="result-box" id="su_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_lump">
+        <h2>Lumpsum</h2>
+        <p class="hint" style="margin-top:0;">A one-time investment left to grow.</p>
+        <div class="form-row"><div><label for="ls_p">Amount invested</label><input type="number" id="ls_p" value="500000" inputmode="decimal"></div><div><label for="ls_r">Expected return (% per year)</label><input type="number" id="ls_r" value="12" step="0.1" inputmode="decimal"></div></div><div class="form-row"><div><label for="ls_y">Years</label><input type="number" id="ls_y" value="10" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runLump()">Calculate</button>
+        <div class="result-box" id="ls_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_swp">
+        <h2>SWP (Withdrawals)</h2>
+        <p class="hint" style="margin-top:0;">Start with a corpus and take a fixed amount out every month, for example in retirement. Shows whether the money lasts.</p>
+        <div class="form-row"><div><label for="swp_c">Starting corpus</label><input type="number" id="swp_c" value="5000000" inputmode="decimal"></div><div><label for="swp_w">Monthly withdrawal</label><input type="number" id="swp_w" value="40000" inputmode="decimal"></div></div><div class="form-row"><div><label for="swp_r">Return while invested (% per year)</label><input type="number" id="swp_r" value="8" step="0.1" inputmode="decimal"></div><div><label for="swp_y">Years to plan for</label><input type="number" id="swp_y" value="25" inputmode="decimal"></div></div><div class="form-row"><div><label for="swp_s">Raise the withdrawal each year by (%)</label><input type="number" id="swp_s" value="0" step="0.5" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runSwp()">Calculate</button>
+        <div class="result-box" id="swp_out" style="display:none;"></div><div id="swp_chart" style="margin-top:14px;"></div>
+      </div>
+      <div class="card" id="card_ssy" data-only="IN">
+        <h2>Sukanya Samriddhi</h2>
+        <p class="hint" style="margin-top:0;">For a girl child: deposits run 15 years from opening and the account matures at 21 years. The rate is 8.2% for October to December 2026 and is reset each quarter.</p>
+        <div class="form-row"><div><label for="ssy_d">Deposit each year (₹250 to ₹1,50,000)</label><input type="number" id="ssy_d" value="150000" inputmode="decimal"></div><div><label for="ssy_r">Interest rate (% per year)</label><input type="number" id="ssy_r" value="8.2" step="0.1" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runSsy()">Calculate</button>
+        <div class="result-box" id="ssy_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_ppf" data-only="IN">
+      <h2>PPF Year by Year Projection</h2>
+      <p class="hint" style="margin-top:0;">Shows exactly how your PPF grows, year on year, for as long as you like. The standard lock in is 15 years, and it can be extended after that in blocks of 5, so try 15, 20 or 25 to see further ahead.</p>
+      <div class="form-row">
+        <div><label>Balance today</label><input type="number" id="ppf_open" value="0"></div>
+        <div><label>Amount you deposit each year</label><input type="number" id="ppf_contrib" value="150000"></div>
+      </div>
+      <div class="form-row">
+        <div><label>Interest rate (% per year)</label><input type="number" id="ppf_rate" value="7.1" step="0.1"></div>
+        <div><label>Number of years to project</label><input type="number" id="ppf_years" value="15"></div>
+      </div>
+      <button style="margin-top:16px;" onclick="runPpf()">Generate the table</button>
+      <div id="ppf_out"></div>
+    </div>
+      <div class="card">
+        <h2>CAGR</h2>
+        <p class="hint" style="margin-top:0;">Works out the steady yearly growth rate between a start value and an end value.</p>
+        <label>Starting value</label><input type="number" id="cagr_b" value="100000">
+        <div class="form-row">
+          <div><label>Ending value</label><input type="number" id="cagr_e" value="150000"></div>
+          <div><label>Time (years)</label><input type="number" id="cagr_t" value="3" step="0.5"></div>
+        </div>
+        <button style="margin-top:16px;" onclick="runCagr()">Calculate</button>
+        <div class="result-box" id="cagr_out" style="display:none;"></div>
+      </div>
+      <div class="card">
+      <h2>XIRR</h2>
+      <p class="hint" style="margin-top:0;">For money going in and out on different dates, like topping up a mutual fund now and then. Enter every amount you put in as a negative number, and the money you got back, or what it is worth today, as a positive number.</p>
+      <table id="xirrTable">
+        <thead><tr><th>Date</th><th>Amount</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <button class="secondary" style="margin-top:12px;" onclick="addXirrRow()">Add a row</button>
+      <button style="margin-top:12px;" onclick="runXirr()">Calculate XIRR</button>
+      <div class="result-box" id="xirr_out" style="display:none;"></div>
+    </div>
+      <div class="card">
+      <h2>Rolling Returns</h2>
+      <p class="hint" style="margin-top:0;">A single CAGR only tells you the return between two dates. Rolling returns test every possible starting point in your data for a given holding period, so you can see how consistent the returns really were, not just the luckiest or unluckiest case. Enter a price or NAV history below, oldest first or in any order.</p>
+      <table id="rrTable">
+        <thead><tr><th>Date</th><th>Price or NAV</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <button class="secondary" style="margin-top:12px;" onclick="addRrRow()">Add a row</button>
+      <button class="secondary" style="margin-top:12px;" onclick="loadRrSample()">Load sample data</button>
+      <div class="form-row" style="margin-top:16px; max-width:320px;">
+        <div><label>Holding period to test (years)</label><input type="number" id="rr_window" value="3" step="0.5"></div>
+      </div>
+      <button style="margin-top:16px;" onclick="runRolling()">Calculate rolling returns</button>
+      <div id="rr_out"></div>
+    </div>
+      </div>
+    </section>
+
+
+    <section class="calc-group" data-cat="plan" data-label="Planning">
+      <div class="grid-2 calc-grid">
+      <div class="card" id="card_fire">
+        <h2>FIRE Number</h2>
+        <p class="hint" style="margin-top:0;">How big a corpus you need to stop depending on a salary, and whether your current saving gets you there. Figures you have already saved elsewhere are filled in.</p>
+        <div class="form-row"><div><label for="fi_exp">Monthly expenses today</label><input type="number" id="fi_exp" value="60000" inputmode="decimal"></div><div><label for="fi_age">Your age</label><input type="number" id="fi_age" value="32" inputmode="decimal"></div></div>
+        <div class="form-row"><div><label for="fi_ret">Age you want to stop working</label><input type="number" id="fi_ret" value="50" inputmode="decimal"></div><div><label for="fi_swr">Safe withdrawal rate (% per year)</label><input type="number" id="fi_swr" value="3.5" step="0.1" inputmode="decimal"></div></div>
+        <div class="form-row"><div><label for="fi_cur">Investments you have now</label><input type="number" id="fi_cur" value="1500000" inputmode="decimal"></div><div><label for="fi_sip">Monthly investment</label><input type="number" id="fi_sip" value="40000" inputmode="decimal"></div></div>
+        <div class="form-row"><div><label for="fi_r">Expected return (% per year)</label><input type="number" id="fi_r" value="11" step="0.1" inputmode="decimal"></div><div><label for="fi_inf">Inflation (% per year)</label><input type="number" id="fi_inf" value="6" step="0.1" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runFire()">Calculate</button>
+        <div class="result-box" id="fi_out" style="display:none;"></div>
+        <div id="fi_chart" style="margin-top:14px;"></div>
+      </div>
+      <div class="card" id="card_emerg">
+        <h2>Emergency Fund</h2>
+        <p class="hint" style="margin-top:0;">Money kept safe and easy to reach, for a job loss or a medical bill. Fixed and recurring deposits you have added count towards it.</p>
+        <div class="form-row"><div><label for="ef_exp">Essential monthly expenses</label><input type="number" id="ef_exp" value="45000" inputmode="decimal"></div>
+          <div><label for="ef_m">Months to cover</label><select id="ef_m"><option value="3">3 months, two steady incomes</option><option value="6" selected>6 months, the usual guide</option><option value="9">9 months, one income or variable pay</option><option value="12">12 months, self-employed or dependents</option></select></div></div>
+        <div class="form-row"><div><label for="ef_have">Already set aside</label><input type="number" id="ef_have" value="100000" inputmode="decimal"></div><div><label for="ef_add">You can add each month</label><input type="number" id="ef_add" value="10000" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runEmergency()">Calculate</button>
+        <div class="result-box" id="ef_out" style="display:none;"></div>
+      </div>
+      </div>
+    </section>
+    <section class="calc-group" data-cat="loans" data-label="Loans & Home">
+      <div class="grid-2 calc-grid">
+      <div class="card">
+        <h2>EMI</h2>
+        <label>Loan amount</label><input type="number" id="emi_p" value="2000000">
+        <div class="form-row">
+          <div><label>Rate (% per year)</label><input type="number" id="emi_r" value="8.5" step="0.1"></div>
+          <div><label>Tenure (months)</label><input type="number" id="emi_n" value="240"></div>
+        </div>
+        <button style="margin-top:16px;" onclick="runEmi()">Calculate</button>
+        <div class="result-box" id="emi_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_prepay">
+        <h2>Loan Prepayment</h2>
+        <p class="hint" style="margin-top:0;">Paying part of a loan early: compare keeping your EMI (the loan ends sooner) against keeping your tenure (the EMI drops).</p>
+        <div class="form-row"><div><label for="pp_o">Outstanding loan</label><input type="number" id="pp_o" value="3000000" inputmode="decimal"></div><div><label for="pp_r">Interest rate (% per year)</label><input type="number" id="pp_r" value="8.5" step="0.05" inputmode="decimal"></div></div><div class="form-row"><div><label for="pp_n">Months left</label><input type="number" id="pp_n" value="180" inputmode="decimal"></div><div><label for="pp_p">Amount you can prepay</label><input type="number" id="pp_p" value="500000" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runPrepay()">Calculate</button>
+        <div class="result-box" id="pp_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_afford">
+        <h2>How much home can I afford?</h2>
+        <p class="hint" style="margin-top:0;">Lenders usually cap all your EMIs at roughly 40 to 50% of take-home pay. This works out the biggest loan that fits, plus your down payment.</p>
+        <div class="form-row"><div><label for="af_i">Monthly take-home income</label><input type="number" id="af_i" value="150000" inputmode="decimal"></div><div><label for="af_e">EMIs you already pay each month</label><input type="number" id="af_e" value="0" inputmode="decimal"></div></div><div class="form-row"><div><label for="af_r">Home loan rate (% per year)</label><input type="number" id="af_r" value="8.5" step="0.05" inputmode="decimal"></div><div><label for="af_y">Loan tenure (years)</label><input type="number" id="af_y" value="20" inputmode="decimal"></div></div><div class="form-row"><div><label for="af_d">Down payment you have</label><input type="number" id="af_d" value="1500000" inputmode="decimal"></div><div><label for="af_s">Share of income for EMIs (%)</label><input type="number" id="af_s" value="40" step="1" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runAfford()">Calculate</button>
+        <div class="result-box" id="af_out" style="display:none;"></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="calc-group" data-cat="tax" data-label="Tax & Salary">
+      <div class="grid-2 calc-grid">
+      <div class="card" id="card_tax" data-only="IN">
+        <h2>Income Tax: Old vs New Regime</h2>
+        <p class="hint" style="margin-top:0;">FY 2026-27 slabs, unchanged by Budget 2026. Includes the 4% cess, the rebate that makes tax nil up to ₹12 lakh of taxable income in the new regime, and surcharge above ₹50 lakh.</p>
+        <div class="form-row"><div><label for="tx_g">Gross annual income</label><input type="number" id="tx_g" value="1500000" inputmode="decimal"></div><div><label for="tx_age">Your age</label><input type="number" id="tx_age" value="34" inputmode="decimal"></div></div><div class="form-row"><div><label for="tx_sal">Income type</label><select id="tx_sal"><option value="yes" selected>Salaried or pensioner</option><option value="no">Business or other</option></select></div><div><label for="tx_enps">Employer NPS contribution (80CCD(2))</label><input type="number" id="tx_enps" value="0" inputmode="decimal"></div></div><p class="hint" style="margin-top:14px; margin-bottom:0;"><strong>Old regime deductions</strong>, leave at 0 if you don't have them</p><div class="form-row"><div><label for="tx_80c">80C (PPF, ELSS, EPF, insurance…)</label><input type="number" id="tx_80c" value="150000" inputmode="decimal"></div><div><label for="tx_80d">80D health insurance premium</label><input type="number" id="tx_80d" value="25000" inputmode="decimal"></div></div><div class="form-row"><div><label for="tx_hl">Home loan interest (self-occupied, max ₹2 lakh)</label><input type="number" id="tx_hl" value="0" inputmode="decimal"></div><div><label for="tx_hra">HRA exemption (use the HRA calculator)</label><input type="number" id="tx_hra" value="0" inputmode="decimal"></div></div><div class="form-row"><div><label for="tx_nps">Your own NPS, 80CCD(1B) (max ₹50,000)</label><input type="number" id="tx_nps" value="0" inputmode="decimal"></div><div><label for="tx_oth">Other deductions</label><input type="number" id="tx_oth" value="0" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runTax()">Calculate</button>
+        <div class="result-box" id="tx_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_hra" data-only="IN">
+        <h2>HRA Exemption</h2>
+        <p class="hint" style="margin-top:0;">How much of your house rent allowance is tax free. Only applies under the old regime. From FY 2026-27 the 50% limit covers eight cities: Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad, Pune and Ahmedabad.</p>
+        <div class="form-row"><div><label for="hra_b">Basic salary + DA (per year)</label><input type="number" id="hra_b" value="600000" inputmode="decimal"></div><div><label for="hra_h">HRA received (per year)</label><input type="number" id="hra_h" value="240000" inputmode="decimal"></div></div><div class="form-row"><div><label for="hra_r">Rent you pay (per year)</label><input type="number" id="hra_r" value="300000" inputmode="decimal"></div><div><label for="hra_c">City</label><select id="hra_c"><option value="50" selected>Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad, Pune, Ahmedabad (50%)</option><option value="40">Any other city (40%)</option></select></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runHra()">Calculate</button>
+        <div class="result-box" id="hra_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_grat" data-only="IN">
+        <h2>Gratuity</h2>
+        <p class="hint" style="margin-top:0;">15 days of wages for each completed year, on a 26-day month. Regular employees qualify after 5 years, fixed-term employees after 1 year under the new labour codes. Up to ₹20 lakh is tax free over your working life.</p>
+        <div class="form-row"><div><label for="gr_w">Last monthly basic + DA</label><input type="number" id="gr_w" value="50000" inputmode="decimal"></div><div><label for="gr_y">Completed years of service</label><input type="number" id="gr_y" value="7" inputmode="decimal"></div></div><div class="form-row"><div><label for="gr_m">Extra months in the last year</label><input type="number" id="gr_m" value="8" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runGrat()">Calculate</button>
+        <div class="result-box" id="gr_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_free" data-only="IN">
+        <h2>Freelancer and Consultant Tax</h2>
+        <p class="hint" style="margin-top:0;">Presumptive taxation for professionals, now section 58 of the Income-tax Act 2025 (the old 44ADA): half your receipts are treated as profit, no books needed. Compared with tax on your actual profit, after the TDS your clients deducted. Tax year 2026-27, new and old regime.</p>
+        <p class="hint" id="fr_src" hidden></p>
+        <div class="form-row"><div><label for="fr_rec">Gross receipts for the year</label><input type="number" id="fr_rec" value="1800000" inputmode="decimal"></div><div><label for="fr_cash">Share received in cash (%)</label><input type="number" id="fr_cash" value="0" inputmode="decimal"></div></div>
+        <div class="form-row"><div><label for="fr_exp">Actual business expenses (for comparison)</label><input type="number" id="fr_exp" value="300000" inputmode="decimal"></div><div><label for="fr_tds">TDS already deducted (clients, and salary if any)</label><input type="number" id="fr_tds" value="120000" inputmode="decimal"></div></div>
+        <div class="form-row"><div><label for="fr_sal">Salary, if you also have a job (gross yearly)</label><input type="number" id="fr_sal" value="0" inputmode="decimal"></div><div><label for="fr_oth">Other income (interest, rent)</label><input type="number" id="fr_oth" value="0" inputmode="decimal"></div></div>
+        <div class="form-row"><div><label for="fr_ded">Old regime deductions (80C, 80D…)</label><input type="number" id="fr_ded" value="150000" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runFree()">Calculate</button>
+        <div class="result-box" id="fr_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_ctax" data-not="IN">
+        <h2>Income Tax &amp; Take-Home Pay</h2>
+        <p class="hint" style="margin-top:0;" id="ct_hint">Your country's current brackets, allowances and payroll contributions.</p>
+        <p class="hint" id="ct_src" hidden></p>
+        <div class="form-row"><div><label for="ct_inc">Yearly salary (before tax)</label><input type="number" id="ct_inc" value="75000" inputmode="decimal"></div><div id="ct_status_wrap"><label for="ct_status" id="ct_status_lbl">Filing status</label><select id="ct_status"></select></div></div>
+        <div class="form-row" id="ct_extra"><div id="ct_region_wrap" hidden><label for="ct_region">Province</label><select id="ct_region"></select></div><div id="ct_state_wrap" hidden><label for="ct_state">State income tax rate (%), optional</label><input type="number" id="ct_state" value="0" step="0.1" min="0" max="15" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runCtax()">Calculate</button>
+        <div class="result-box" id="ct_out" style="display:none;"></div><div id="ct_chart" style="margin-top:14px;"></div>
+      </div>
+      <div class="card" id="card_cfree" data-not="IN">
+        <h2>Self-Employed &amp; Freelancer Tax</h2>
+        <p class="hint" style="margin-top:0;">Tax and contributions on your profit as a sole trader, contractor or freelancer, with what to set aside each month.</p>
+        <div class="form-row"><div><label for="cf_rev">Yearly revenue</label><input type="number" id="cf_rev" value="90000" inputmode="decimal"></div><div><label for="cf_exp">Business expenses</label><input type="number" id="cf_exp" value="15000" inputmode="decimal"></div></div>
+        <div class="form-row"><div id="cf_region_wrap" hidden><label for="cf_region">Province</label><select id="cf_region"></select></div><div id="cf_state_wrap" hidden><label for="cf_state">State income tax rate (%), optional</label><input type="number" id="cf_state" value="0" step="0.1" min="0" max="15" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runCfree()">Calculate</button>
+        <div class="result-box" id="cf_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_cgrat" data-only="AE">
+        <h2>End of Service Gratuity</h2>
+        <p class="hint" style="margin-top:0;">UAE private sector: 21 days of basic pay for each of the first five years, 30 days for each year after, capped at two years' pay. Needs at least one year of service.</p>
+        <div class="form-row"><div><label for="cg2_b">Last monthly basic pay</label><input type="number" id="cg2_b" value="12000" inputmode="decimal"></div><div><label for="cg2_y">Years of service (decimals allowed)</label><input type="number" id="cg2_y" value="6.5" step="0.1" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runCgrat()">Calculate</button>
+        <div class="result-box" id="cg2_out" style="display:none;"></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="calc-group" data-cat="interest" data-label="Interest & Inflation">
+      <div class="grid-2 calc-grid">
+      <div class="card">
+        <h2>Simple Interest</h2>
+        <label>Principal</label><input type="number" id="si_p" value="100000">
+        <div class="form-row">
+          <div><label>Rate (% per year)</label><input type="number" id="si_r" value="8" step="0.1"></div>
+          <div><label>Time (years)</label><input type="number" id="si_t" value="3" step="0.5"></div>
+        </div>
+        <button style="margin-top:16px;" onclick="runSimple()">Calculate</button>
+        <div class="result-box" id="si_out" style="display:none;"></div>
+      </div>
+      <div class="card">
+        <h2>Compound Interest</h2>
+        <label>Principal</label><input type="number" id="ci_p" value="100000">
+        <div class="form-row">
+          <div><label>Rate (% per year)</label><input type="number" id="ci_r" value="8" step="0.1"></div>
+          <div><label>Time (years)</label><input type="number" id="ci_t" value="3" step="0.5"></div>
+        </div>
+        <label>Compounding frequency</label>
+        <select id="ci_n">
+          <option value="1">Yearly</option>
+          <option value="2">Half yearly</option>
+          <option value="4" selected>Quarterly</option>
+          <option value="12">Monthly</option>
+        </select>
+        <button style="margin-top:16px;" onclick="runCompound()">Calculate</button>
+        <div class="result-box" id="ci_out" style="display:none;"></div>
+      </div>
+      <div class="card" id="card_infl">
+        <h2>Inflation</h2>
+        <p class="hint" style="margin-top:0;">What something costs in the future, and what a future sum is really worth in today's money.</p>
+        <div class="form-row"><div><label for="in_a">Amount today</label><input type="number" id="in_a" value="100000" inputmode="decimal"></div><div><label for="in_r">Inflation (% per year)</label><input type="number" id="in_r" value="6" step="0.1" inputmode="decimal"></div></div><div class="form-row"><div><label for="in_y">Years</label><input type="number" id="in_y" value="10" inputmode="decimal"></div></div>
+        <button style="margin-top:16px;" type="button" onclick="runInfl()">Calculate</button>
+        <div class="result-box" id="in_out" style="display:none;"></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="calc-group" data-cat="fx" data-label="Currency">
+      <div class="grid-2 calc-grid">
+      <div class="card">
+      <h2>Currency Converter</h2>
+      <p class="hint" style="margin-top:0;">Uses live European Central Bank reference rates from the free Frankfurter service, useful for foreign currency accounts, remittances, or valuing an asset held abroad.</p>
+      <div class="form-row">
+        <div><label>Amount</label><input type="number" id="fx_amount" value="1000"></div>
+        <div><label>From</label>
+          <select id="fx_from">
+            <option>INR</option><option selected>USD</option><option>EUR</option><option>GBP</option>
+            <option>JPY</option><option>AUD</option><option>CAD</option><option>SGD</option><option>CHF</option><option>HKD</option><option>NZD</option><option>CNY</option>
+          </select>
+        </div>
+      </div>
+      <label>To</label>
+      <select id="fx_to">
+        <option selected>INR</option><option>USD</option><option>EUR</option><option>GBP</option>
+        <option>JPY</option><option>AUD</option><option>CAD</option><option>SGD</option><option>CHF</option><option>HKD</option><option>NZD</option><option>CNY</option>
+      </select>
+      <button style="margin-top:14px;" onclick="runFx()">Convert</button>
+      <div class="result-box" id="fx_out" style="display:none;"></div>
+    </div>
+      </div>
+    </section>
+    <p class="empty" id="calcNone" hidden>No calculator matches that search.</p>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/prices.js"></script>
+<script src="js/compute.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/calc-extra.js"></script>
+<script>
+function runSimple(){
+  const p = Number(document.getElementById('si_p').value)||0;
+  const r = Number(document.getElementById('si_r').value)||0;
+  const t = Number(document.getElementById('si_t').value)||0;
+  const { interest, maturity } = simpleInterest(p, r, t);
+  const box = document.getElementById('si_out');
+  box.style.display = 'block';
+  box.innerHTML = `<div class="stat-label">Interest earned</div><div class="num">${fmtMoney(interest)}</div><p class="hint">Total value at the end: ${fmtMoney(maturity)}</p>`;
+}
+
+function runCompound(){
+  const p = Number(document.getElementById('ci_p').value)||0;
+  const r = Number(document.getElementById('ci_r').value)||0;
+  const t = Number(document.getElementById('ci_t').value)||0;
+  const n = Number(document.getElementById('ci_n').value)||1;
+  const { interest, maturity } = compoundInterest(p, r, t, n);
+  const box = document.getElementById('ci_out');
+  box.style.display = 'block';
+  box.innerHTML = `<div class="stat-label">Interest earned</div><div class="num">${fmtMoney(interest)}</div><p class="hint">Total value at the end: ${fmtMoney(maturity)}</p>`;
+}
+
+function runCagr(){
+  const b = Number(document.getElementById('cagr_b').value)||0;
+  const e = Number(document.getElementById('cagr_e').value)||0;
+  const t = Number(document.getElementById('cagr_t').value)||0;
+  const rate = cagr(b, e, t);
+  const box = document.getElementById('cagr_out');
+  box.style.display = 'block';
+  if(rate === null){
+    box.innerHTML = `<p>Enter a starting value and a time above zero.</p>`;
+  }else{
+    box.innerHTML = `<div class="stat-label">Compound annual growth rate</div><div class="num">${rate.toFixed(2)}%</div><p class="hint">This is the steady yearly rate that would take ${fmtMoney(b)} to ${fmtMoney(e)} over ${t} years.</p>`;
+  }
+}
+
+function runEmi(){
+  const p = Number(document.getElementById('emi_p').value)||0;
+  const r = Number(document.getElementById('emi_r').value)||0;
+  const n = Number(document.getElementById('emi_n').value)||0;
+  const monthly = emi(p, r, n);
+  const totalInterest = totalInterestOnLoan(p, r, n);
+  const box = document.getElementById('emi_out');
+  box.style.display = 'block';
+  box.innerHTML = `<div class="stat-label">Monthly EMI</div><div class="num">${fmtMoney(monthly)}</div><p class="hint">Total interest paid over the loan: ${fmtMoney(totalInterest)}. Total paid back: ${fmtMoney(monthly*n)}.</p>`;
+}
+
+function addXirrRow(date, amount){
+  const tbody = document.querySelector('#xirrTable tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="date" value="${date||''}"></td>
+    <td><input type="number" value="${amount!==undefined?amount:''}" placeholder="-10000 or 15000"></td>
+    <td><button class="danger" onclick="this.closest('tr').remove()">Remove</button></td>
+  `;
+  tbody.appendChild(tr);
+}
+// start with two example rows
+if(document.getElementById('xirrTable')){ addXirrRow(localISO(Date.now() - 365*864e5), -100000); addXirrRow(localISO(), 112000); }
+
+function runPpf(){
+  const opening = Number(document.getElementById('ppf_open').value)||0;
+  const contrib = Number(document.getElementById('ppf_contrib').value)||0;
+  const rate = Number(document.getElementById('ppf_rate').value)||0;
+  const years = Math.max(1, Math.round(Number(document.getElementById('ppf_years').value)||15));
+  const rows = ppfSchedule(opening, contrib, rate, years);
+  const totalInvested = opening + contrib * years;
+  const totalInterest = rows[rows.length-1].closing - totalInvested;
+
+  let html = `<div class="result-box">
+    <div class="grid-3">
+      <div><div class="stat-label">Total invested</div><div class="num" style="font-size:19px;">${fmtMoney(totalInvested)}</div></div>
+      <div><div class="stat-label">Total interest earned</div><div class="num" style="font-size:19px;">${fmtMoney(totalInterest)}</div></div>
+      <div><div class="stat-label">Value after ${years} years</div><div class="num" style="font-size:19px;">${fmtMoney(rows[rows.length-1].closing)}</div></div>
+    </div>
+  </div>
+  <div style="max-height:340px; overflow-y:auto; margin-top:16px;">
+  <table><thead><tr><th class="num">Year</th><th class="num">Opening balance</th><th class="num">Contribution</th><th class="num">Interest earned</th><th class="num">Closing balance</th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr><td class="num">${r.year}</td><td class="num">${fmtMoney(r.opening)}</td><td class="num">${fmtMoney(r.contribution)}</td><td class="num">${fmtMoney(r.interest)}</td><td class="num">${fmtMoney(r.closing)}</td></tr>`;
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('ppf_out').innerHTML = html;
+}
+
+function addRrRow(date, value){
+  const tbody = document.querySelector('#rrTable tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="date" value="${date||''}"></td>
+    <td><input type="number" value="${value!==undefined?value:''}" placeholder="e.g. 42.5"></td>
+    <td><button class="danger" onclick="this.closest('tr').remove()">Remove</button></td>
+  `;
+  tbody.appendChild(tr);
+}
+if(document.getElementById('rrTable')){ addRrRow(); addRrRow(); addRrRow(); }
+
+function loadRrSample(){
+  document.querySelector('#rrTable tbody').innerHTML = '';
+  const sample = [
+    ['2018-01-01', 20], ['2019-01-01', 22.4], ['2020-01-01', 19.8],
+    ['2021-01-01', 27.6], ['2022-01-01', 31.2], ['2023-01-01', 29.5],
+    ['2024-01-01', 36.8], ['2025-01-01', 40.1], ['2026-01-01', 43.0]
+  ];
+  sample.forEach(([d,v]) => addRrRow(d,v));
+}
+
+function drawSparkline(rates){
+  const w = 560, h = 120, pad = 8;
+  const min = Math.min(...rates, 0), max = Math.max(...rates, 0);
+  const range = (max - min) || 1;
+  const zeroY = h - pad - ((0 - min) / range) * (h - pad*2);
+  const points = rates.map((r,i) => {
+    const x = pad + (i / Math.max(1, rates.length-1)) * (w - pad*2);
+    const y = h - pad - ((r - min) / range) * (h - pad*2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" style="margin-top:14px;">
+    <line x1="${pad}" y1="${zeroY.toFixed(1)}" x2="${w-pad}" y2="${zeroY.toFixed(1)}" stroke="#DCD3BE" stroke-dasharray="4 3"/>
+    <polyline points="${points}" fill="none" stroke="#1F6F62" stroke-width="2"/>
+  </svg>`;
+}
+
+function runRolling(){
+  const rows = [...document.querySelectorAll('#rrTable tbody tr')];
+  const points = rows.map(r => {
+    const inputs = r.querySelectorAll('input');
+    return { date: inputs[0].value, value: Number(inputs[1].value) };
+  }).filter(p => p.date && !isNaN(p.value));
+
+  const windowYears = Number(document.getElementById('rr_window').value) || 1;
+  const box = document.getElementById('rr_out');
+  const result = rollingReturns(points, windowYears);
+
+  if(result.error === 'need-more-points'){
+    box.innerHTML = `<div class="result-box"><p>Add at least a few dated prices first.</p></div>`;
+    return;
+  }
+  if(result.error === 'window-too-long'){
+    box.innerHTML = `<div class="result-box"><p>Your data does not stretch far enough to test a ${windowYears} year holding period yet. Add more history or try a shorter window.</p></div>`;
+    return;
+  }
+
+  box.innerHTML = `<div class="result-box">
+    <div class="grid-3">
+      <div><div class="stat-label">Average rolling return</div><div class="num" style="font-size:19px;">${result.avg.toFixed(2)}%</div></div>
+      <div><div class="stat-label">Best period</div><div class="num pos" style="font-size:19px;">${result.best.toFixed(2)}%</div></div>
+      <div><div class="stat-label">Worst period</div><div class="num ${result.worst<0?'neg':'pos'}" style="font-size:19px;">${result.worst.toFixed(2)}%</div></div>
+    </div>
+    <p class="hint">Out of ${result.series.length} overlapping ${windowYears} year periods in your data, ${result.negativePct.toFixed(0)}% would have ended in a loss.</p>
+    ${drawSparkline(result.series.map(s=>s.rate))}
+  </div>`;
+}
+
+async function runFx(){
+  const amount = Number(document.getElementById('fx_amount').value)||0;
+  const from = document.getElementById('fx_from').value;
+  const to = document.getElementById('fx_to').value;
+  const box = document.getElementById('fx_out');
+  box.style.display = 'block';
+  if(from === to){
+    box.innerHTML = `<p>${fmtMoney(amount, from)} is already in ${to}.</p>`;
+    return;
+  }
+  box.innerHTML = '<p>Fetching the latest rate…</p>';
+  try{
+    const { rate, date } = await fetchFxRate(from, to);
+    const converted = amount * rate;
+    box.innerHTML = `<div class="stat-label">${amount.toLocaleString()} ${from} equals</div><div class="num" style="font-size:26px;">${converted.toLocaleString(undefined,{maximumFractionDigits:2})} ${to}</div><p class="hint">At a rate of 1 ${from} = ${rate} ${to}, from the ECB reference rate dated ${date}.</p>`;
+  }catch(err){
+    box.innerHTML = `<p>${err.message || 'Could not fetch the exchange rate.'}</p>`;
+  }
+}
+
+function runXirr(){
+  const rows = [...document.querySelectorAll('#xirrTable tbody tr')];
+  const cashflows = rows.map(r => {
+    const inputs = r.querySelectorAll('input');
+    return { date: inputs[0].value, amount: Number(inputs[1].value) };
+  }).filter(cf => cf.date && !isNaN(cf.amount) && cf.amount !== 0);
+
+  const box = document.getElementById('xirr_out');
+  box.style.display = 'block';
+  if(cashflows.length < 2){
+    box.innerHTML = `<p>Add at least one investment (negative) and one current or final value (positive).</p>`;
+    return;
+  }
+  const rate = xirr(cashflows);
+  if(rate === null){
+    box.innerHTML = `<p>Could not work out a rate from these numbers. Check that you have both a negative and a positive amount.</p>`;
+  }else{
+    box.innerHTML = `<div class="stat-label">XIRR</div><div class="num">${rate.toFixed(2)}%</div><p class="hint">This is the annualised return across all the dated amounts you entered.</p>`;
+  }
+}
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

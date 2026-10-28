@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Assets | CO₹PU$</title>
+<meta name="description" content="Your bank balances, deposits, retirement accounts, investments and property.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://corpusnetworth.in/assets">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Assets | CO₹PU$">
+<meta property="og:description" content="Your bank balances, deposits, retirement accounts, investments and property.">
+<meta property="og:url" content="https://corpusnetworth.in/assets">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Assets | CO₹PU$">
+<meta name="twitter:description" content="Your bank balances, deposits, retirement accounts, investments and property.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>Assets</h1>
+      <p>Add everything you hold. Current value updates on its own using the numbers you give it, and you can refresh stock or mutual fund prices whenever you like.</p>
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+
+    <div class="card">
+      <h2 id="formTitle">Add Entry</h2>
+      <form id="entryForm"></form>
+    </div>
+
+    <div class="card">
+      <h2 id="tableTitle">Your Entries</h2>
+      <div id="categorySummary"></div>
+      <div id="tableWrap"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/compute.js"></script>
+<script src="js/prices.js"></script>
+<script src="js/keys.js"></script>
+<script>
+const ASSET_TYPES = [
+  { key:'cash', label:'Bank & Cash', computeFn: computeCash,
+    fields:[
+      {id:'name', label:'Account name', type:'text', placeholder:'e.g. HDFC savings, cash at home'},
+      {id:'balance', label:'Balance', type:'number'},
+      {id:'asOf', label:'Balance as on', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'asOf', label:'As on'},
+      {key:'currentValue', label:'Balance', money:true}
+    ],
+    note:'Savings and current accounts, sweep balances and cash at home. Update the balance now and then, or import a bank statement on the Import page to fill it for you.'
+  },
+  { key:'ppf', label:'PPF', computeFn: computePpf,
+    fields:[
+      {id:'name', label:'Account name', type:'text', placeholder:'e.g. My PPF'},
+      {id:'openingBalance', label:'Balance when you started tracking', type:'number'},
+      {id:'annualContribution', label:'Amount you deposit each year', type:'number'},
+      {id:'rate', label:'Interest rate (% per year)', type:'number', step:'0.1', value:'7.1'},
+      {id:'startDate', label:'Date you started tracking from', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'rate', label:'Rate', suffix:'%'},
+      {key:'startDate', label:'Tracked since'},
+      {key:'currentValue', label:'Current value', money:true}
+    ]
+  },
+  { key:'epf', label:'EPF', computeFn: computeEpf, importer:'epf',
+    fields:[
+      {id:'name', label:'Account name', type:'text', placeholder:'e.g. My EPF via employer'},
+      {id:'openingBalance', label:'Balance when you started tracking', type:'number'},
+      {id:'monthlyContribution', label:'Combined monthly contribution (you + employer)', type:'number'},
+      {id:'rate', label:'Interest rate (% per year)', type:'number', step:'0.1', value:'8.25'},
+      {id:'startDate', label:'Date you started tracking from', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'monthlyContribution', label:'Monthly', money:true},
+      {key:'rate', label:'Rate', suffix:'%'},
+      {key:'currentValue', label:'Current value', money:true}
+    ],
+    note:'Different from PPF, this is your employer linked provident fund. The rate is declared fresh each year by EPFO, 8.25% is the current one.'
+  },
+  { key:'nps', label:'NPS', computeFn: computeNps,
+    fields:[
+      {id:'name', label:'Account name', type:'text', placeholder:'e.g. My NPS Tier I'},
+      {id:'tier', label:'Tier', type:'select', options:[
+        {value:'I', label:'Tier I (locked in till retirement)'},
+        {value:'II', label:'Tier II (withdraw anytime)'}
+      ]},
+      {id:'openingBalance', label:'Balance when you started tracking', type:'number'},
+      {id:'monthlyContribution', label:'Amount you contribute each month', type:'number'},
+      {id:'expectedReturn', label:'Expected return (% per year)', type:'number', step:'0.1', value:'10'},
+      {id:'startDate', label:'Date you started tracking from', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'tier', label:'Tier'},
+      {key:'monthlyContribution', label:'Monthly', money:true},
+      {key:'expectedReturn', label:'Assumed return', suffix:'%'},
+      {key:'currentValue', label:'Current value', money:true}
+    ],
+    note:'NPS is market-linked, split across equity, corporate debt and government securities depending on the funds you picked, so there is no fixed declared rate like PPF or EPF. Use a realistic expected return based on your own fund choice and check your real balance on the CRA (cra-nsdl.com or the eNPS app) now and then.'
+  },
+  { key:'fd', label:'Fixed Deposits', computeFn: computeFd,
+    fields:[
+      {id:'name', label:'Deposit name', type:'text', placeholder:'e.g. HDFC FD'},
+      {id:'principal', label:'Amount deposited', type:'number'},
+      {id:'rate', label:'Interest rate (% per year)', type:'number', step:'0.1'},
+      {id:'tenureMonths', label:'Tenure (months)', type:'number'},
+      {id:'startDate', label:'Start date', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'principal', label:'Deposited', money:true},
+      {key:'rate', label:'Rate', suffix:'%'},
+      {key:'maturityDate', label:'Matures'},
+      {key:'currentValue', label:'Current value', money:true}
+    ]
+  },
+  { key:'rd', label:'Recurring Deposits', computeFn: computeRd,
+    fields:[
+      {id:'name', label:'Deposit name', type:'text', placeholder:'e.g. SBI RD'},
+      {id:'monthlyAmount', label:'Amount deposited each month', type:'number'},
+      {id:'rate', label:'Interest rate (% per year)', type:'number', step:'0.1'},
+      {id:'tenureMonths', label:'Tenure (months)', type:'number'},
+      {id:'startDate', label:'Start date', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'monthlyAmount', label:'Per month', money:true},
+      {key:'rate', label:'Rate', suffix:'%'},
+      {key:'maturityDate', label:'Matures'},
+      {key:'currentValue', label:'Current value', money:true}
+    ]
+  },
+  { key:'stocks', label:'Stocks', computeFn: computeStock, live:'stock',
+    fields:[
+      {id:'name', label:'Company name', type:'text', placeholder:'e.g. Reliance'},
+      {id:'symbol', label:'Ticker symbol (without any exchange suffix)', type:'text', placeholder:'e.g. RELIANCE or AAPL'},
+      {id:'exchange', label:'Exchange', type:'select', options:[
+        {value:'', label:'US / global (no suffix)'},
+        {value:'BSE', label:'India — BSE'}
+      ]},
+      {id:'quantity', label:'Number of shares', type:'number', step:'any'},
+      {id:'buyPrice', label:'Average buy price', type:'number', step:'any'},
+      {id:'buyDate', label:'First purchase date', type:'date'},
+      {id:'currentPrice', label:'Current price (or fetch it live below)', type:'number', step:'any'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'quantity', label:'Qty'},
+      {key:'buyPrice', label:'Buy price', decimals:true},
+      {key:'currentPrice', label:'Current price', decimals:true},
+      {key:'currentValue', label:'Current value', money:true},
+      {key:'gain', label:'Gain / loss', money:true, signed:true}
+    ],
+    note:'Alpha Vantage supports live prices for BSE-listed stocks (choose India — BSE above) and most US tickers. It does not support NSE directly, so an NSE-only stock may need to be looked up by its BSE listing instead, if it has one.'
+  },
+  { key:'mf', label:'Mutual Funds', computeFn: computeMf, live:'mf',
+    fields:[
+      {id:'name', label:'Fund name', type:'text', placeholder:'e.g. Parag Parikh Flexi Cap'},
+      {id:'schemeCode', label:'Scheme code (search below to find it)', type:'text'},
+      {id:'units', label:'Units held', type:'number', step:'any'},
+      {id:'buyPrice', label:'Average purchase NAV', type:'number', step:'any'},
+      {id:'buyDate', label:'First purchase date', type:'date'},
+      {id:'currentNav', label:'Current NAV (or fetch it live below)', type:'number', step:'any'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'units', label:'Units'},
+      {key:'buyPrice', label:'Buy NAV', decimals:true},
+      {key:'currentNav', label:'Current NAV', decimals:true},
+      {key:'currentValue', label:'Current value', money:true},
+      {key:'gain', label:'Gain / loss', money:true, signed:true}
+    ]
+  },
+  { key:'gold', label:'Gold & Silver', computeFn: computeGold, live:'gold',
+    fields:[
+      {id:'name', label:'Holding name', type:'text', placeholder:'e.g. Wedding jewellery, SGB, digital gold'},
+      {id:'metal', label:'Metal', type:'select', options:[{value:'gold',label:'Gold'},{value:'silver',label:'Silver'}]},
+      {id:'grams', label:'Weight in grams', type:'number', step:'any'},
+      {id:'buyPricePerGram', label:'Price per gram when bought', type:'number', step:'any'},
+      {id:'buyDate', label:'Purchase date', type:'date'},
+      {id:'currentPricePerGram', label:'Current price per gram (or fetch it live below)', type:'number', step:'any'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'metal', label:'Metal'},
+      {key:'grams', label:'Grams'},
+      {key:'currentPricePerGram', label:'Price / gram', decimals:true},
+      {key:'currentValue', label:'Current value', money:true},
+      {key:'gain', label:'Gain / loss', money:true, signed:true}
+    ],
+    note:'Live spot price is for the metal itself, jewellery you own is usually worth somewhat less than spot once making charges are backed out, so treat the fetched value as an upper estimate.'
+  },
+  { key:'crypto', label:'Crypto', computeFn: computeCrypto, live:'crypto',
+    fields:[
+      {id:'name', label:'Holding name', type:'text', placeholder:'e.g. Bitcoin'},
+      {id:'coinId', label:'CoinGecko coin ID (not the ticker)', type:'text', placeholder:'e.g. bitcoin, ethereum, solana'},
+      {id:'quantity', label:'Quantity held', type:'number', step:'any'},
+      {id:'buyPrice', label:'Average buy price', type:'number', step:'any'},
+      {id:'buyDate', label:'First purchase date', type:'date'},
+      {id:'currentPrice', label:'Current price (or fetch it live below)', type:'number', step:'any'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'quantity', label:'Quantity'},
+      {key:'currentPrice', label:'Current price', decimals:true},
+      {key:'currentValue', label:'Current value', money:true},
+      {key:'gain', label:'Gain / loss', money:true, signed:true}
+    ],
+    note:'Use the CoinGecko slug for the coin ID, not its ticker, for example "bitcoin" rather than "BTC". Search coingecko.com if unsure.'
+  },
+  { key:'bonds', label:'Bonds', computeFn: computeBond,
+    fields:[
+      {id:'name', label:'Bond name', type:'text', placeholder:'e.g. 7.1% GOI 2034, or a company NCD'},
+      {id:'issuer', label:'Issuer', type:'text', placeholder:'e.g. Government of India, HDFC Ltd'},
+      {id:'bondType', label:'Type', type:'select', options:[
+        {value:'government', label:'Government (G-Sec / SDL)'},
+        {value:'psu', label:'PSU bond'},
+        {value:'corporate', label:'Corporate bond / NCD'},
+        {value:'other', label:'Other'}
+      ]},
+      {id:'rating', label:'Credit rating', type:'select', options:[
+        {value:'sovereign', label:'Sovereign (govt.)'},
+        {value:'AAA', label:'AAA'},
+        {value:'AA', label:'AA (+ / - )'},
+        {value:'A', label:'A (+ / - )'},
+        {value:'BBB', label:'BBB (+ / - )'},
+        {value:'BB', label:'BB and below'},
+        {value:'NR', label:'Not rated'}
+      ]},
+      {id:'faceValue', label:'Face value per unit', type:'number', step:'any', value:'1000'},
+      {id:'quantity', label:'Units held', type:'number', step:'any'},
+      {id:'couponRate', label:'Coupon rate (% per year)', type:'number', step:'0.01'},
+      {id:'frequency', label:'Coupon frequency', type:'select', options:[
+        {value:'annual', label:'Annual'},
+        {value:'semi', label:'Semi-annual'}
+      ]},
+      {id:'purchasePrice', label:'Price you paid per unit', type:'number', step:'any'},
+      {id:'purchaseDate', label:'Purchase date', type:'date'},
+      {id:'maturityDate', label:'Maturity date', type:'date'},
+      {id:'ytm', label:'Current yield to maturity, YTM (% per year)', type:'number', step:'0.01'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'rating', label:'Rating'},
+      {key:'ytm', label:'YTM', suffix:'%'},
+      {key:'currentYield', label:'Running yield', pct:true},
+      {key:'currentValue', label:'Current value', money:true},
+      {key:'gain', label:'Gain / loss', money:true, signed:true}
+    ],
+    note:'There is no free live price feed for individual bonds, so the current value here is a fair-value estimate: it prices the bond\'s remaining coupons and face value using the YTM you enter, not a quoted market price. Update the YTM occasionally, from your broker or the NSE/BSE debt segment, to keep this realistic.'
+  },
+  { key:'land', label:'Land & Property', computeFn: computeLand,
+    fields:[
+      {id:'name', label:'Property name', type:'text', placeholder:'e.g. Plot in Coimbatore'},
+      {id:'purchasePrice', label:'Purchase price', type:'number'},
+      {id:'purchaseDate', label:'Purchase date', type:'date'},
+      {id:'currentValue', label:'Your best estimate of current value', type:'number'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'purchasePrice', label:'Purchase price', money:true},
+      {key:'purchaseDate', label:'Purchased'},
+      {key:'currentValue', label:'Current value', money:true}
+    ]
+  },
+  { key:'rental', label:'Rental Income', computeFn:(e)=>e,
+    fields:[
+      {id:'name', label:'Property name', type:'text', placeholder:'e.g. Flat rented out'},
+      {id:'monthlyRent', label:'Monthly rent received', type:'number'},
+      {id:'startDate', label:'Since', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'monthlyRent', label:'Monthly rent', money:true},
+      {key:'startDate', label:'Since'}
+    ],
+    note:'This is treated as income, not counted inside net worth as an asset value.'
+  },
+  { key:'insurance', label:'Insurance', computeFn:(e)=>e, summary:'insurance',
+    fields:[
+      {id:'name', label:'Policy name', type:'text', placeholder:'e.g. Family floater plan'},
+      {id:'insurer', label:'Insurer', type:'text', placeholder:'e.g. HDFC Ergo, LIC, ICICI Lombard'},
+      {id:'category', label:'Type', type:'select', options:[
+        {value:'health', label:'Health'},
+        {value:'accident', label:'Personal accident'},
+        {value:'life', label:'Life / term'},
+        {value:'vehicle', label:'Vehicle'},
+        {value:'home', label:'Home / property'},
+        {value:'other', label:'Other'}
+      ]},
+      {id:'sumInsured', label:'Sum insured (coverage amount)', type:'number'},
+      {id:'premium', label:'Annual premium', type:'number'},
+      {id:'startDate', label:'Policy start date', type:'date'},
+      {id:'renewalDate', label:'Next renewal / expiry date', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Policy'},
+      {key:'category', label:'Type'},
+      {key:'insurer', label:'Insurer'},
+      {key:'sumInsured', label:'Coverage', money:true},
+      {key:'premium', label:'Annual premium', money:true},
+      {key:'renewalDate', label:'Renews'}
+    ],
+    note:'This is tracked for coverage, not counted inside net worth, insurance is protection, not an asset you can spend. See the Insurance Guide in the sidebar for what each type actually covers and its pros and cons.'
+  }
+];
+
+// ---------- outside India: local account names, and no PPF, EPF, NPS or RD ----------
+(function adaptToCountry(){
+  if(!window.CorpusCountry || CorpusCountry.isIndia()) return;
+  const P = CorpusCountry.get();
+  for(let i = ASSET_TYPES.length - 1; i >= 0; i--) if(['ppf','epf','nps','rd'].includes(ASSET_TYPES[i].key)) ASSET_TYPES.splice(i, 1);
+  const fd = ASSET_TYPES.find(t => t.key === 'fd'); if(fd){ fd.label = P.fdLabel; }
+  const mf = ASSET_TYPES.find(t => t.key === 'mf');
+  if(mf){
+    mf.label = 'Funds & ETFs'; mf.live = 'fund';
+    mf.fields = mf.fields.filter(f => f.id !== 'schemeCode');
+    mf.fields.splice(1, 0, { id:'symbol', label:'Ticker for live price (optional)', type:'text', placeholder:'e.g. VOO, VWRL.LON or VAS.AU' });
+    mf.fields.forEach(f => { if(f.id === 'name') f.placeholder = 'e.g. Global index fund'; if(f.id === 'currentNav') f.label = 'Current price per unit (or fetch it live below)'; if(f.id === 'buyPrice') f.label = 'Average purchase price per unit'; });
+    mf.columns.forEach(c => { if(c.label === 'Buy NAV') c.label = 'Buy price'; if(c.label === 'Current NAV') c.label = 'Current price'; });
+    mf.note = 'Add the ticker your broker shows to refresh the price live. Add .LON for London or .TRT for Toronto (Alpha Vantage or EODHD), or .AU for the ASX (EODHD). Funds without a ticker keep the price you type.';
+  }
+  const stocks = ASSET_TYPES.find(t => t.key === 'stocks');
+  if(stocks){ stocks.fields.forEach(f => { if(f.id === 'exchange') f.options = [{ value: '', label: 'US listed (live price)' }, { value: 'LON', label: 'London (live price)' }, { value: 'TRT', label: 'Toronto (live price)' }, { value: 'ASX', label: 'Australia, ASX (live price with EODHD)' }, { value: 'OTHER', label: 'Other exchange (enter the price yourself)' }]; }); }
+  const R = P.retire || { label: 'Retirement', types: ['Retirement account'] };
+  ASSET_TYPES.splice(1, 0, { key:'retire', label: R.label, computeFn: computeRetire,
+    fields:[
+      {id:'name', label:'Account name', type:'text', placeholder:'e.g. ' + R.types[0] + ' at work'},
+      {id:'accountType', label:'Account type', type:'select', options: R.types.map(t => ({ value: t, label: t }))},
+      {id:'openingBalance', label:'Balance today', type:'number'},
+      {id:'monthlyContribution', label:'Amount added each month (you and your employer)', type:'number'},
+      {id:'expectedReturn', label:'Expected return (% per year)', type:'number', step:'0.1', value:'6'},
+      {id:'startDate', label:'Balance as on', type:'date'}
+    ],
+    columns:[
+      {key:'name', label:'Name'},
+      {key:'accountType', label:'Type'},
+      {key:'monthlyContribution', label:'Monthly', money:true},
+      {key:'currentValue', label:'Value today', money:true}
+    ],
+    note: (R.limits || '') + ' The value grows from the balance you enter, at the return you expect, plus monthly additions. Update the balance from your statement now and then.'
+  });
+})();
+
+let activeType = ASSET_TYPES[0].key;
+
+function currentConfig(){ return ASSET_TYPES.find(t => t.key === activeType); }
+
+function renderTabs(){
+  const wrap = document.getElementById('tabs');
+  wrap.innerHTML = '';
+  ASSET_TYPES.forEach(t => {
+    const b = document.createElement('button');
+    b.textContent = t.label;
+    b.className = t.key === activeType ? 'active' : '';
+    b.onclick = () => { activeType = t.key; renderAll(); };
+    wrap.appendChild(b);
+  });
+}
+
+function renderForm(){
+  const cfg = currentConfig();
+  document.getElementById('formTitle').textContent = 'Add ' + ({ppf:'a PPF account',epf:'an EPF account',nps:'an NPS account',fd:'a fixed deposit',rd:'a recurring deposit',stocks:'a stock',mf:'a mutual fund',gold:'gold or silver',crypto:'a crypto holding',bonds:'a bond',land:'land or property',rental:'rental income',insurance:'an insurance policy',loans:'a loan',debts:'a debt'}[cfg.key] || cfg.label.toLowerCase());
+  const form = document.getElementById('entryForm');
+  form.innerHTML = '';
+  if(window.CorpusKeys && ['stock', 'mf', 'fund'].includes(cfg.live)) form.insertAdjacentHTML('afterbegin', CorpusKeys.strip(cfg.live));
+
+  const row = document.createElement('div');
+  row.className = 'form-row';
+  cfg.fields.forEach(f => {
+    const wrap = document.createElement('div');
+    const label = document.createElement('label');
+    label.textContent = f.label;
+    let input;
+    if(f.type === 'select'){
+      input = document.createElement('select');
+      f.options.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o.value; opt.textContent = o.label;
+        input.appendChild(opt);
+      });
+    }else{
+      input = document.createElement('input');
+      input.type = f.type;
+      if(f.step) input.step = f.step;
+      if(f.placeholder) input.placeholder = f.placeholder;
+    }
+    input.id = 'f_' + f.id;
+    if(f.value) input.value = f.value;
+    wrap.appendChild(label);
+    wrap.appendChild(input);
+    row.appendChild(wrap);
+  });
+  form.appendChild(row);
+
+  if(cfg.live === 'mf'){
+    const searchWrap = document.createElement('div');
+    searchWrap.style.marginTop = '14px';
+    searchWrap.innerHTML = `
+      <label>Search for a scheme by name</label>
+      <input type="text" id="mfSearch" placeholder="e.g. Parag Parikh Flexi Cap">
+      <div id="mfResults" style="margin-top:8px; font-size:13px;"></div>
+    `;
+    form.appendChild(searchWrap);
+    setTimeout(() => {
+      document.getElementById('mfSearch').addEventListener('input', debounce(async (e) => {
+        const q = e.target.value;
+        const box = document.getElementById('mfResults');
+        box.innerHTML = '';
+        if(q.trim().length < 3) return;
+        try{
+          const results = await searchMfSchemes(q);
+          results.forEach(r => {
+            const item = document.createElement('div');
+            item.style.cursor = 'pointer';
+            item.style.padding = '5px 0';
+            item.style.color = 'var(--moss)';
+            item.textContent = r.schemeName;
+            item.onclick = () => {
+              document.getElementById('f_schemeCode').value = r.schemeCode;
+              document.getElementById('f_name').value = r.schemeName;
+              box.innerHTML = '';
+              document.getElementById('mfSearch').value = '';
+            };
+            box.appendChild(item);
+          });
+        }catch(err){ showToast('Search failed, try again.'); }
+      }, 400));
+    }, 0);
+  }
+
+  if(cfg.importer === 'epf'){
+    const importWrap = document.createElement('div');
+    importWrap.style.marginTop = '16px';
+    importWrap.innerHTML = `
+      <label>Or import from a salary slip or EPFO passbook (PDF)</label>
+      <input type="file" id="epfPdfFile" accept="application/pdf">
+      <p class="hint" id="epfPdfStatus"></p>
+      <div id="epfPdfResults"></div>
+    `;
+    form.appendChild(importWrap);
+    setTimeout(() => {
+      document.getElementById('epfPdfFile').addEventListener('change', handleEpfPdf);
+    }, 0);
+  }
+
+  const btnRow = document.createElement('div');
+  btnRow.style.marginTop = '16px';
+  const submit = document.createElement('button');
+  submit.type = 'submit';
+  submit.textContent = 'Add entry';
+  btnRow.appendChild(submit);
+  form.appendChild(btnRow);
+
+  if(cfg.note){
+    const note = document.createElement('p');
+    note.className = 'hint';
+    note.textContent = cfg.note;
+    form.appendChild(note);
+  }
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    const entry = {};
+    cfg.fields.forEach(f => { entry[f.id] = document.getElementById('f_' + f.id).value; });
+    addEntry(activeType, entry);
+    showToast('Added.');
+    renderForm();
+    renderTable();
+  };
+}
+
+function fmtCell(val, col){
+  if(val === undefined || val === null || val === '') return '—';
+  if(col.pct) return Number(val).toFixed(2) + '%';
+  if(col.decimals) return fmtMoneyPrecise(val);
+  if(col.money) return fmtMoney(val);
+  if(col.suffix) return val + col.suffix;
+  return val;
+}
+
+const CATEGORY_LABELS = { health:'Health', accident:'Personal accident', life:'Life / term', vehicle:'Vehicle', home:'Home / property', other:'Other' };
+
+function renderCategorySummary(cfg, entries){
+  const box = document.getElementById('categorySummary');
+  if(cfg.summary !== 'insurance' || entries.length === 0){
+    box.innerHTML = '';
+    return;
+  }
+  const byCategory = {};
+  entries.forEach(e => {
+    const cat = e.category || 'other';
+    if(!byCategory[cat]) byCategory[cat] = { sumInsured: 0, premium: 0, count: 0 };
+    byCategory[cat].sumInsured += Number(e.sumInsured) || 0;
+    byCategory[cat].premium += Number(e.premium) || 0;
+    byCategory[cat].count += 1;
+  });
+  let html = '<div class="grid-3" style="margin-bottom:18px;">';
+  Object.entries(byCategory).forEach(([cat, v]) => {
+    html += `<div class="card" style="margin-bottom:0;">
+      <div class="stat-label">${CATEGORY_LABELS[cat] || cat} cover</div>
+      <div class="stat-num" style="font-size:19px;">${fmtMoney(v.sumInsured)}</div>
+      <p class="hint" style="margin-top:4px;">${v.count} ${v.count === 1 ? 'policy' : 'policies'}, ${fmtMoney(v.premium)} a year in premium</p>
+    </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+function renderTable(){
+  const cfg = currentConfig();
+  document.getElementById('tableTitle').textContent = cfg.label;
+  const data = loadData();
+  const entries = data[activeType].map(cfg.computeFn);
+  const wrap = document.getElementById('tableWrap');
+
+  renderCategorySummary(cfg, entries);
+
+  if(entries.length === 0){
+    wrap.innerHTML = `<p class="empty">Nothing added yet. Use the form above to add your first entry.</p>`;
+    return;
+  }
+
+  let html = '<table><thead><tr>';
+  cfg.columns.forEach(c => html += `<th class="${c.money?'num':''}">${c.label}</th>`);
+  if(cfg.live) html += '<th></th>';
+  html += '<th></th></tr></thead><tbody>';
+
+  entries.forEach(e => {
+    html += '<tr>';
+    cfg.columns.forEach(c => {
+      const raw = e[c.key];
+      let cell = fmtCell(raw, c);
+      if(c.signed && typeof raw === 'number'){
+        cell = `<span class="pill ${raw >= 0 ? 'moss' : 'brick'}">${raw >= 0 ? '+' : ''}${fmtMoney(raw)}</span>`;
+      }
+      html += `<td class="${c.money?'num':''}">${cell}</td>`;
+    });
+    if(cfg.live){
+      html += `<td><button class="link" data-fetch="${e.id}">Refresh price</button></td>`;
+    }
+    html += `<td class="row-actions"><button class="danger" data-del="${e.id}">Remove</button></td>`;
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  wrap.innerHTML = html;
+
+  wrap.querySelectorAll('[data-del]').forEach(btn => {
+    btn.onclick = () => { removeEntry(activeType, btn.dataset.del); renderTable(); showToast('Removed.'); };
+  });
+
+  if(cfg.live){
+    wrap.querySelectorAll('[data-fetch]').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.dataset.fetch;
+        const entry = loadData()[activeType].find(x => x.id === id);
+        btn.textContent = 'Fetching…';
+        try{
+          const settings = loadData().settings;
+          if(cfg.live === 'stock' || cfg.live === 'fund'){
+            if(!entry.symbol) throw new Error(cfg.live === 'fund' ? 'Add this fund\'s ticker first (edit it above), or keep typing its price yourself.' : 'This stock has no ticker yet.');
+            if(entry.exchange === 'OTHER') throw new Error('No free live price for this exchange. Type the current price yourself.');
+            const rt = CorpusKeys.route(entry.symbol, entry.exchange);
+            const prov = rt.provider, sym = rt.symbol;
+            const r = await CorpusKeys.withKey(prov, (key) => CorpusKeys.PROVIDERS[prov].fetch(sym, key), entry.name || sym);
+            if(cfg.live === 'fund') updateEntry('mf', id, { currentNav: r.price });
+            else updateEntry('stocks', id, { currentPrice: r.price });
+            showToast(`Price updated from ${CorpusKeys.PROVIDERS[prov].name}.`);
+          }else if(cfg.live === 'mf'){
+            const result = await fetchMfNav(entry.schemeCode);
+            updateEntry('mf', id, { currentNav: result.nav });
+            showToast(`NAV updated as of ${result.date}.`);
+          }else if(cfg.live === 'gold'){
+            const result = await fetchMetalPricePerGram(entry.metal || 'gold', settings.currency);
+            updateEntry('gold', id, { currentPricePerGram: result.pricePerGram });
+            showToast(result.isStale ? 'Price updated (marked stale by the source).' : 'Price updated.');
+          }else if(cfg.live === 'crypto'){
+            const result = await fetchCryptoPrice(entry.coinId, settings.currency);
+            updateEntry('crypto', id, { currentPrice: result.price });
+            showToast('Price updated.');
+          }
+        }catch(err){
+          if(err.code !== 'CANCELLED') showToast(err.message || 'Could not fetch price.');
+        }
+        renderTable();
+      };
+    });
+  }
+}
+
+// ---------- PDF import for EPF (salary slips, EPFO passbooks) ----------
+// Everything here runs inside your browser using a locally bundled copy
+// of pdf.js. The file you choose is never uploaded anywhere, it is only
+// read in memory to pull out text.
+let pdfJsLoadPromise = null;
+function ensurePdfJsLoaded(){
+  if(pdfJsLoadPromise) return pdfJsLoadPromise;
+  pdfJsLoadPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'js/vendor/pdf.min.js';
+    script.onload = () => {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'js/vendor/pdf.worker.min.js';
+      resolve();
+    };
+    script.onerror = () => reject(new Error('Could not load the PDF reader.'));
+    document.head.appendChild(script);
+  });
+  return pdfJsLoadPromise;
+}
+
+async function extractPdfText(file){
+  const buffer = await file.arrayBuffer();
+  const doc = await pdfjsLib.getDocument({ data: buffer }).promise;
+  let fullText = '';
+  for(let i = 1; i <= doc.numPages; i++){
+    const page = await doc.getPage(i);
+    const content = await page.getTextContent();
+    const lines = {};
+    content.items.forEach(item => {
+      const y = Math.round(item.transform[5]);
+      lines[y] = (lines[y] || '') + item.str + ' ';
+    });
+    const orderedY = Object.keys(lines).map(Number).sort((a,b) => b - a);
+    fullText += orderedY.map(y => lines[y].trim()).join('\n') + '\n';
+  }
+  return fullText;
+}
+
+const EPF_KEYWORDS = /provident fund|epf|p\.?f\.? (wage|contribution|balance)|employee'?s? share|employer'?s? share|closing balance|total balance|basic( \+ da)?|net pay|gross (pay|earnings)|uan/i;
+const NUMBER_RE = /-?₹?\s?[\d][\d,]*\.?\d{0,2}/g;
+
+function findPdfCandidates(text){
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const candidates = [];
+  lines.forEach(line => {
+    if(!EPF_KEYWORDS.test(line)) return;
+    const numbers = (line.match(NUMBER_RE) || [])
+      .map(n => Number(n.replace(/[₹,\s]/g, '')))
+      .filter(n => !isNaN(n) && n > 0);
+    if(numbers.length === 0) return;
+    numbers.forEach(n => candidates.push({ line, value: n }));
+  });
+  // de-duplicate identical (line, value) pairs and cap the list
+  const seen = new Set();
+  return candidates.filter(c => {
+    const key = c.line + '|' + c.value;
+    if(seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  }).slice(0, 12);
+}
+
+async function handleEpfPdf(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const status = document.getElementById('epfPdfStatus');
+  const results = document.getElementById('epfPdfResults');
+  results.innerHTML = '';
+  status.textContent = 'Reading the PDF in your browser…';
+  try{
+    await ensurePdfJsLoaded();
+    const text = await extractPdfText(file);
+    const candidates = findPdfCandidates(text);
+    if(candidates.length === 0){
+      status.textContent = 'Could not find anything that looked like a PF figure in this file. You can still enter the numbers by hand above.';
+      return;
+    }
+    status.textContent = 'Found these lines with numbers in them. Check each one and use it to fill the field it matches, since layouts vary and this is a best effort read, not a guarantee.';
+    candidates.forEach(c => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px;';
+      row.innerHTML = `
+        <span style="color:var(--ink-soft); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${c.line.replace(/"/g,'&quot;')}">${c.line}</span>
+        <strong style="flex-shrink:0;">${fmtMoney(c.value)}</strong>
+        <button type="button" class="secondary" style="flex-shrink:0; padding:5px 10px; font-size:12px;" data-use="opening" data-value="${c.value}">Use as opening</button>
+        <button type="button" class="secondary" style="flex-shrink:0; padding:5px 10px; font-size:12px;" data-use="monthly" data-value="${c.value}">Use as monthly</button>
+      `;
+      results.appendChild(row);
+    });
+    results.querySelectorAll('[data-use]').forEach(btn => {
+      btn.onclick = () => {
+        const val = btn.dataset.value;
+        if(btn.dataset.use === 'opening') document.getElementById('f_openingBalance').value = val;
+        else document.getElementById('f_monthlyContribution').value = val;
+        showToast('Filled in above, check it before saving.');
+      };
+    });
+  }catch(err){
+    status.textContent = 'Could not read that file: ' + (err.message || 'unknown error') + '. You can still enter the numbers by hand above.';
+  }
+}
+
+function debounce(fn, ms){
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+function renderAll(){ renderTabs(); renderForm(); renderTable(); }
+renderAll();
+document.addEventListener('corpus:keys', () => { if(['stock', 'mf', 'fund'].includes(currentConfig().live)){ const f = document.getElementById('entryForm'); const old = f.querySelector('.src-strip'); if(old) old.outerHTML = CorpusKeys.strip(currentConfig().live); } });
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

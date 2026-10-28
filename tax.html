@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Tax on Investments in India: Capital Gains, FD, 80C, NPS | CO₹PU$</title>
+<meta name="description" content="How capital gains, FD interest, 80C, NPS and rental income are taxed in India, with calculators for each. Updated for tax year 2026-27.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://corpusnetworth.in/tax">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Tax on Investments in India: Capital Gains, FD, 80C, NPS | CO₹PU$">
+<meta property="og:description" content="How capital gains, FD interest, 80C, NPS and rental income are taxed in India, with calculators for each. Updated for tax year 2026-27.">
+<meta property="og:url" content="https://corpusnetworth.in/tax">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tax on Investments in India: Capital Gains, FD, 80C, NPS | CO₹PU$">
+<meta name="twitter:description" content="How capital gains, FD interest, 80C, NPS and rental income are taxed in India, with calculators for each. Updated for tax year 2026-27.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://corpusnetworth.in/#org","name":"CO₹PU$","alternateName":"Corpus","url":"https://corpusnetworth.in/","logo":"https://corpusnetworth.in/assets/icon-512.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://corpusnetworth.in/"},{"@type":"ListItem","position":2,"name":"Tax","item":"https://corpusnetworth.in/tax"}]}]}</script>
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>Tax</h1>
+      <p>Rough, plain arithmetic estimates for Indian personal tax rules, using the rates in force after the July 2024 changes, unchanged through the 2025 and 2026 budgets. This is not tax advice, tax rules and thresholds do change, so treat this as a starting estimate and check with a chartered accountant or the income tax department for anything that matters, like an actual filing.</p>
+    </div>
+
+    <div class="card">
+      <h2>Capital Gains on Stocks and Equity Mutual Funds</h2>
+      <p class="hint" style="margin-top:0;">Applies to listed shares and equity oriented mutual funds where securities transaction tax is paid. Holding for 12 months or more makes it long term.</p>
+      <div class="form-row">
+        <div><label>Amount invested</label><input type="number" id="cg_buy" value="500000"></div>
+        <div><label>Amount received on sale</label><input type="number" id="cg_sell" value="750000"></div>
+      </div>
+      <label>Holding period (months)</label>
+      <input type="number" id="cg_months" value="18">
+      <div class="form-row" style="margin-top:6px;">
+        <div><label>Short term rate (%)</label><input type="number" id="cg_stcg_rate" value="20" step="0.1"></div>
+        <div><label>Long term rate (%)</label><input type="number" id="cg_ltcg_rate" value="12.5" step="0.1"></div>
+      </div>
+      <label>Long term exemption per year (₹)</label>
+      <input type="number" id="cg_exemption" value="125000">
+      <p class="hint">These default rates and the exemption are current as of the last update to this tool. If it has been a while, or a new budget has come out, check they still match before relying on the result.</p>
+      <button style="margin-top:10px;" onclick="runCapGains()">Calculate</button>
+      <div class="result-box" id="cg_out" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Debt Mutual Funds and Other Slab Rate Gains</h2>
+      <p class="hint" style="margin-top:0;">Units of debt, liquid, or money market funds bought on or after 1 April 2023 get no long term benefit at all. Every rupee of gain is added to your income and taxed at your regular slab rate, no matter how long you held it.</p>
+      <div class="form-row">
+        <div><label>Gain amount</label><input type="number" id="debt_gain" value="150000"></div>
+        <div><label>Your income tax slab rate (%)</label>
+          <select id="debt_rate">
+            <option value="0">0% (below taxable income)</option>
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+            <option value="30" selected>30%</option>
+          </select>
+        </div>
+      </div>
+      <button style="margin-top:10px;" onclick="runDebtTax()">Calculate</button>
+      <div class="result-box" id="debt_out" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Fixed and Recurring Deposit Interest</h2>
+      <p class="hint" style="margin-top:0;">FD and RD interest is always taxed at your slab rate, it never gets a special lower rate. Banks also hold back a TDS if your interest crosses a threshold, though you still owe tax on the full amount at your slab rate regardless.</p>
+      <div class="form-row">
+        <div><label>Total interest this year (per bank)</label><input type="number" id="fd_interest" value="65000"></div>
+        <div><label>Your income tax slab rate (%)</label>
+          <select id="fd_rate">
+            <option value="0">0% (below taxable income)</option>
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+            <option value="30" selected>30%</option>
+          </select>
+        </div>
+      </div>
+      <label><input type="checkbox" id="fd_senior" style="width:auto; display:inline-block; margin-right:8px;">I am a senior citizen (60 years or older)</label>
+      <button style="margin-top:10px;" onclick="runFdTax()">Calculate</button>
+      <div class="result-box" id="fd_out" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Section 80C Saving</h2>
+      <p class="hint" style="margin-top:0;">PPF, tax saver FDs, ELSS mutual funds, and life insurance premiums can all count here, up to a combined ceiling of ₹1.5 lakh a year. This only applies if you are filing under the old tax regime, the new regime does not allow it.</p>
+      <div class="form-row">
+        <div><label>Amount invested in 80C instruments this year</label><input type="number" id="c80_amount" value="150000"></div>
+        <div><label>Your income tax slab rate (%)</label>
+          <select id="c80_rate">
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+            <option value="30" selected>30%</option>
+          </select>
+        </div>
+      </div>
+      <label>Tax regime</label>
+      <select id="c80_regime">
+        <option value="old">Old regime (80C applies)</option>
+        <option value="new">New regime (80C does not apply)</option>
+      </select>
+      <button style="margin-top:10px;" onclick="run80c()">Calculate</button>
+      <div class="result-box" id="c80_out" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>NPS Saving Under Section 80CCD(1B)</h2>
+      <p class="hint" style="margin-top:0;">A separate deduction just for NPS, on top of the ₹1.5 lakh Section 80C ceiling above, not sharing that limit with it. Like 80C, this only applies under the old tax regime for your own contributions. If your employer also contributes to your NPS, that portion has its own separate benefit under Section 80CCD(2), available in both regimes, not covered by this calculator.</p>
+      <div class="form-row">
+        <div><label>Your own NPS contribution this year</label><input type="number" id="nps_amount" value="50000"></div>
+        <div><label>Your income tax slab rate (%)</label>
+          <select id="nps_rate">
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+            <option value="30" selected>30%</option>
+          </select>
+        </div>
+      </div>
+      <label>Tax regime</label>
+      <select id="nps_regime">
+        <option value="old">Old regime (80CCD(1B) applies)</option>
+        <option value="new">New regime (80CCD(1B) does not apply)</option>
+      </select>
+      <button style="margin-top:10px;" onclick="runNpsTax()">Calculate</button>
+      <div class="result-box" id="nps_out" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Rental Income</h2>
+      <p class="hint" style="margin-top:0;">A simplified version of how a let out property is taxed: a flat 30% standard deduction is allowed on the rent left after municipal taxes, and home loan interest on a let out property can be deducted in full, with no cap.</p>
+      <div class="form-row">
+        <div><label>Annual rent received</label><input type="number" id="rent_amount" value="360000"></div>
+        <div><label>Municipal taxes paid this year</label><input type="number" id="rent_muni" value="8000"></div>
+      </div>
+      <div class="form-row">
+        <div><label>Home loan interest paid this year</label><input type="number" id="rent_loan_interest" value="120000"></div>
+        <div><label>Your income tax slab rate (%)</label>
+          <select id="rent_rate">
+            <option value="5">5%</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+            <option value="30" selected>30%</option>
+          </select>
+        </div>
+      </div>
+      <button style="margin-top:10px;" onclick="runRentalTax()">Calculate</button>
+      <div class="result-box" id="rent_out" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Where PPF Stands</h2>
+      <p>PPF follows what is usually called the EEE method, exempt, exempt, exempt. The amount you put in can count towards your Section 80C deduction under the old regime, the interest that builds up every year is entirely tax free, and the final amount you withdraw at maturity is tax free too. There is no calculator needed here, this is simply one of the few investments in India where tax never enters the picture at any stage.</p>
+    </div>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/finance.js"></script>
+<script>
+function runCapGains(){
+  const buy = Number(document.getElementById('cg_buy').value)||0;
+  const sell = Number(document.getElementById('cg_sell').value)||0;
+  const months = Number(document.getElementById('cg_months').value)||0;
+  const stcgRate = Number(document.getElementById('cg_stcg_rate').value)||0;
+  const ltcgRate = Number(document.getElementById('cg_ltcg_rate').value)||0;
+  const exemption = Number(document.getElementById('cg_exemption').value)||0;
+
+  const gain = sell - buy;
+  const isLongTerm = months >= 12;
+  let tax = 0, note = '';
+  if(gain <= 0){
+    note = 'There is no gain here, so no capital gains tax applies. A loss like this can usually be set off against other capital gains, worth keeping a record of.';
+  }else if(isLongTerm){
+    const taxable = Math.max(0, gain - exemption);
+    tax = taxable * ltcgRate / 100;
+    note = `Long term. The first ₹${exemption.toLocaleString('en-IN')} of long term equity gains in the year is exempt, so tax applies only to ₹${taxable.toLocaleString('en-IN')} of this gain.`;
+  }else{
+    tax = gain * stcgRate / 100;
+    note = 'Short term. There is no exemption on short term equity gains, the full gain is taxed.';
+  }
+
+  document.getElementById('cg_out').style.display = 'block';
+  document.getElementById('cg_out').innerHTML = `
+    <div class="grid-3">
+      <div><div class="stat-label">Gain</div><div class="num" style="font-size:19px;">${fmtMoney(gain)}</div></div>
+      <div><div class="stat-label">Tax payable</div><div class="num neg" style="font-size:19px;">${fmtMoney(tax)}</div></div>
+      <div><div class="stat-label">Net after tax</div><div class="num pos" style="font-size:19px;">${fmtMoney(sell - tax)}</div></div>
+    </div>
+    <p class="hint">${note} This excludes surcharge and health and education cess, which can add a bit more for larger gains.</p>
+  `;
+}
+
+function runDebtTax(){
+  const gain = Number(document.getElementById('debt_gain').value)||0;
+  const rate = Number(document.getElementById('debt_rate').value)||0;
+  const tax = gain * rate / 100;
+  document.getElementById('debt_out').style.display = 'block';
+  document.getElementById('debt_out').innerHTML = `
+    <div class="stat-label">Tax payable</div>
+    <div class="num" style="font-size:22px;">${fmtMoney(tax)}</div>
+    <p class="hint">Net after tax: ${fmtMoney(gain - tax)}. This entire gain simply joins your other income for the year, there is no separate rate to think about.</p>
+  `;
+}
+
+function runFdTax(){
+  const interest = Number(document.getElementById('fd_interest').value)||0;
+  const rate = Number(document.getElementById('fd_rate').value)||0;
+  const isSenior = document.getElementById('fd_senior').checked;
+  const tax = interest * rate / 100;
+  const threshold = isSenior ? 100000 : 50000;
+  const tdsExpected = interest > threshold;
+  const tdsAmount = tdsExpected ? interest * 0.10 : 0;
+
+  document.getElementById('fd_out').style.display = 'block';
+  document.getElementById('fd_out').innerHTML = `
+    <div class="grid-3">
+      <div><div class="stat-label">Tax owed on this interest</div><div class="num" style="font-size:19px;">${fmtMoney(tax)}</div></div>
+      <div><div class="stat-label">TDS the bank will likely hold back</div><div class="num" style="font-size:19px;">${fmtMoney(tdsAmount)}</div></div>
+      <div><div class="stat-label">Threshold that applies to you</div><div class="num" style="font-size:19px;">${fmtMoney(threshold)}</div></div>
+    </div>
+    <p class="hint">${tdsExpected
+      ? 'This crosses the TDS threshold, so expect the bank to deduct roughly 10% before crediting the rest. You can claim this back at tax filing time if your actual liability turns out lower.'
+      : 'This is below the TDS threshold, so the bank likely will not deduct anything. You still owe tax on it at your slab rate when you file, if your total income is taxable.'}</p>
+  `;
+}
+
+function run80c(){
+  const amount = Number(document.getElementById('c80_amount').value)||0;
+  const rate = Number(document.getElementById('c80_rate').value)||0;
+  const regime = document.getElementById('c80_regime').value;
+  const box = document.getElementById('c80_out');
+  box.style.display = 'block';
+
+  if(regime === 'new'){
+    box.innerHTML = `<p>The new regime does not allow the Section 80C deduction, so this investment saves you nothing on tax this year under it, though it can still be a perfectly good place to put your money for other reasons. Switching to the old regime is the only way to claim this.</p>`;
+    return;
+  }
+  const eligible = Math.min(amount, 150000);
+  const saved = eligible * rate / 100;
+  box.innerHTML = `
+    <div class="stat-label">Tax saved this year</div>
+    <div class="num" style="font-size:22px;">${fmtMoney(saved)}</div>
+    <p class="hint">Only ₹${eligible.toLocaleString('en-IN')} of your investment counts, since the Section 80C ceiling is ₹1.5 lakh a year even if you put in more.</p>
+  `;
+}
+
+function runNpsTax(){
+  const amount = Number(document.getElementById('nps_amount').value)||0;
+  const rate = Number(document.getElementById('nps_rate').value)||0;
+  const regime = document.getElementById('nps_regime').value;
+  const box = document.getElementById('nps_out');
+  box.style.display = 'block';
+
+  if(regime === 'new'){
+    box.innerHTML = `<p>The new regime does not allow Section 80CCD(1B), so your own NPS contribution saves nothing here under it. An employer's NPS contribution under Section 80CCD(2) is a separate benefit and still applies in the new regime.</p>`;
+    return;
+  }
+  const eligible = Math.min(amount, 50000);
+  const saved = eligible * rate / 100;
+  box.innerHTML = `
+    <div class="stat-label">Tax saved this year</div>
+    <div class="num" style="font-size:22px;">${fmtMoney(saved)}</div>
+    <p class="hint">Only ₹${eligible.toLocaleString('en-IN')} counts, since the 80CCD(1B) ceiling is ₹50,000 a year regardless of how much more you put in. This is separate from, and on top of, whatever you already claimed under Section 80C.</p>
+  `;
+}
+
+function runRentalTax(){
+  const rent = Number(document.getElementById('rent_amount').value)||0;
+  const muni = Number(document.getElementById('rent_muni').value)||0;
+  const loanInterest = Number(document.getElementById('rent_loan_interest').value)||0;
+  const rate = Number(document.getElementById('rent_rate').value)||0;
+
+  const nav = rent - muni;
+  const standardDeduction = nav * 0.3;
+  const taxableIncome = nav - standardDeduction - loanInterest;
+  const tax = Math.max(0, taxableIncome) * rate / 100;
+
+  const box = document.getElementById('rent_out');
+  box.style.display = 'block';
+  box.innerHTML = `
+    <div class="grid-3">
+      <div><div class="stat-label">Net annual value</div><div class="num" style="font-size:19px;">${fmtMoney(nav)}</div></div>
+      <div><div class="stat-label">Taxable rental income</div><div class="num ${taxableIncome<0?'neg':''}" style="font-size:19px;">${fmtMoney(taxableIncome)}</div></div>
+      <div><div class="stat-label">Tax owed on it</div><div class="num" style="font-size:19px;">${fmtMoney(tax)}</div></div>
+    </div>
+    <p class="hint">${taxableIncome < 0
+      ? `This shows a loss from house property of ${fmtMoney(Math.abs(taxableIncome))}. Up to ₹2,00,000 of this loss can be set off against your other income in the same year, and whatever is left over can be carried forward.`
+      : 'This taxable amount gets added to your other income for the year and taxed at your slab rate.'}</p>
+  `;
+}
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

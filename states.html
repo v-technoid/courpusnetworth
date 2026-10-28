@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>State Health Schemes and Resources Across India | CO₹PU$</title>
+<meta name="description" content="Free and subsidised state health insurance schemes across Indian states, who qualifies and how to apply.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://corpusnetworth.in/states">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="State Health Schemes and Resources Across India | CO₹PU$">
+<meta property="og:description" content="Free and subsidised state health insurance schemes across Indian states, who qualifies and how to apply.">
+<meta property="og:url" content="https://corpusnetworth.in/states">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="State Health Schemes and Resources Across India | CO₹PU$">
+<meta name="twitter:description" content="Free and subsidised state health insurance schemes across Indian states, who qualifies and how to apply.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://corpusnetworth.in/#org","name":"CO₹PU$","alternateName":"Corpus","url":"https://corpusnetworth.in/","logo":"https://corpusnetworth.in/assets/icon-512.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://corpusnetworth.in/"},{"@type":"ListItem","position":2,"name":"State Resources","item":"https://corpusnetworth.in/states"}]}]}</script>
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>State Resources</h1>
+      <p>Free government health cover and scheme finders for where you live. Every figure below was checked in October 2026, and schemes change often, so confirm on the official portal before relying on one.</p>
+    </div>
+
+    <div class="card">
+      <div class="form-row">
+        <div><label for="stateSel">Your state or union territory</label><select id="stateSel"></select></div>
+        <div><label for="stateSearch">Or search all states</label>
+          <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="stateSearch" placeholder="e.g. Kerala, Aarogyasri"></div></div>
+      </div>
+      <div id="stateDetail" aria-live="polite"></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2>Available in Every State</h2>
+        <div class="kv"><span><strong style="color:var(--ink)">Ayushman Bharat PM-JAY</strong><br><span class="hint" style="margin:0">₹5 lakh a year of hospital cover for eligible families, and free cover for everyone aged 70 or over.</span></span><span><a href="https://pmjay.gov.in" target="_blank" rel="noopener" style="color:var(--accent); font-weight:600;">Portal ↗</a></span></div>
+        <div class="kv"><span><strong style="color:var(--ink)">PMJJBY, PMSBY, Atal Pension Yojana</strong><br><span class="hint" style="margin:0">Low-cost life cover, accident cover and a guaranteed pension, through any bank.</span></span><span><a href="schemes.html" style="color:var(--accent); font-weight:600;">Details</a></span></div>
+        <div class="kv"><span><strong style="color:var(--ink)">myScheme</strong><br><span class="hint" style="margin:0">The government's own search for central and state schemes, filterable by state, age, income and occupation.</span></span><span><a href="https://www.myscheme.gov.in" target="_blank" rel="noopener" style="color:var(--accent); font-weight:600;">Search ↗</a></span></div>
+      </div>
+      <div class="card">
+        <h2>How to Use a State Scheme Well</h2>
+        <div class="advice info"><h4>Treat it as a base layer</h4><p>State schemes pay for fixed treatment packages at empanelled hospitals. They are valuable, but not a replacement for your own health policy.</p></div>
+        <div class="advice info"><h4>Enrol before you need it</h4><p>Get your card made while you are well. Sorting eligibility during an emergency is slow.</p></div>
+        <div class="advice info"><h4>Ask the hospital's scheme desk</h4><p>Empanelled hospitals have an Arogya Mitra or similar desk that checks eligibility and handles the paperwork.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>State Schemes at a Glance</h2>
+      <p class="hint" style="margin-top:0;">States not listed rely on Ayushman Bharat PM-JAY, sometimes with their own top-up. Use myScheme to check.</p>
+      <div id="stateTable"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/states-data.js"></script>
+<script>
+(function(){
+  const sel = document.getElementById('stateSel');
+  const detail = document.getElementById('stateDetail');
+  sel.innerHTML = '<option value="">Choose your state</option>' + STATES.map(s => `<option>${escapeHtml(s)}</option>`).join('');
+
+  const link = (href, label) => href ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener" style="color:var(--accent); font-weight:600;">${escapeHtml(label || 'Official portal')} ↗</a>` : '';
+
+  function render(state){
+    if(!state){ detail.innerHTML = ''; return; }
+    const info = STATE_HEALTH[state];
+    if(info){
+      detail.innerHTML = `<div class="result-box">
+        <div class="card-head" style="margin-bottom:8px;"><h3 style="margin:0;">${escapeHtml(info.scheme)}</h3>
+          ${info.cover ? `<span class="pill moss">${escapeHtml(fmtCompact(info.cover, 'INR'))} cover</span>` : '<span class="pill plain">See portal for cover</span>'}
+          ${info.universal ? '<span class="pill gold">Open to all families</span>' : ''}</div>
+        <p style="margin:0 0 6px;">${escapeHtml(info.summary)}</p>
+        ${info.note ? `<p class="hint">${escapeHtml(info.note)}</p>` : ''}
+        <p style="margin:8px 0 0;">${link(info.link, info.linkLabel)}${info.link ? ' · ' : ''}<a href="insurance.html" style="color:var(--accent); font-weight:600;">Work out your own cover</a></p>
+      </div>`;
+    }else{
+      detail.innerHTML = `<div class="result-box">
+        <h3 style="margin:0 0 6px;">${escapeHtml(state)}: Ayushman Bharat PM-JAY</h3>
+        <p style="margin:0 0 6px;">${escapeHtml(NATIONAL_HEALTH.summary)}</p>
+        <p class="hint">No separate state scheme is listed here for ${escapeHtml(state)}. The state may run a top-up or its own scheme, check myScheme or the state health department.</p>
+        <p style="margin:8px 0 0;">${link(NATIONAL_HEALTH.link, NATIONAL_HEALTH.linkLabel)} · ${link('https://www.myscheme.gov.in', 'myScheme')}</p>
+      </div>`;
+    }
+  }
+
+  // remember the choice, shared with the insurance calculator
+  const saved = (loadData().settings.insuranceProfile || {}).state || '';
+  sel.value = saved;
+  render(saved);
+  sel.addEventListener('change', () => {
+    render(sel.value);
+    const st = loadData().settings;
+    updateSettings({ insuranceProfile: { ...(st.insuranceProfile || {}), state: sel.value } });
+  });
+
+  const rows = Object.entries(STATE_HEALTH).map(([state, i]) => ({ state, ...i }));
+  function table(q){
+    q = (q || '').toLowerCase();
+    const list = rows.filter(r => !q || (r.state + ' ' + r.scheme + ' ' + r.summary).toLowerCase().includes(q));
+    document.getElementById('stateTable').innerHTML = list.length ? `<table><thead><tr><th>State</th><th>Scheme</th><th class="num">Cover</th><th>Who can join</th><th></th></tr></thead><tbody>
+      ${list.map(r => `<tr>
+        <td><strong>${escapeHtml(r.state)}</strong></td>
+        <td>${escapeHtml(r.scheme)}</td>
+        <td class="num">${r.cover ? escapeHtml(fmtCompact(r.cover, 'INR')) : '—'}</td>
+        <td>${r.universal ? '<span class="pill gold">All families</span>' : '<span class="pill plain">Eligible families</span>'}</td>
+        <td>${r.link ? link(r.link, 'Portal') : ''}</td></tr>`).join('')}
+    </tbody></table>` : '<p class="empty">No state scheme matches that search.</p>';
+  }
+  table('');
+  document.getElementById('stateSearch').addEventListener('input', e => {
+    const q = e.target.value.trim();
+    table(q);
+    const exact = STATES.find(s => s.toLowerCase() === q.toLowerCase());
+    if(exact){ sel.value = exact; render(exact); }
+  });
+})();
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

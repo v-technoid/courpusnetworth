@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Government Schemes for Savings and Insurance in India | CO₹PU$</title>
+<meta name="description" content="PPF, SSY, NPS, APY, PMJJBY, PMSBY and more: who can join, how much, and what you get, explained simply.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://corpusnetworth.in/schemes">
+<link rel="alternate" hreflang="en-IN" href="https://corpusnetworth.in/schemes">
+<link rel="alternate" hreflang="en-US" href="https://corpusnetworth.in/us/benefits">
+<link rel="alternate" hreflang="en-GB" href="https://corpusnetworth.in/uk/benefits">
+<link rel="alternate" hreflang="en-CA" href="https://corpusnetworth.in/ca/benefits">
+<link rel="alternate" hreflang="en-AU" href="https://corpusnetworth.in/au/benefits">
+<link rel="alternate" hreflang="en-SG" href="https://corpusnetworth.in/sg/benefits">
+<link rel="alternate" hreflang="en-AE" href="https://corpusnetworth.in/ae/benefits">
+<link rel="alternate" hreflang="en-NZ" href="https://corpusnetworth.in/nz/benefits">
+<link rel="alternate" hreflang="x-default" href="https://corpusnetworth.in/schemes">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Government Schemes for Savings and Insurance in India | CO₹PU$">
+<meta property="og:description" content="PPF, SSY, NPS, APY, PMJJBY, PMSBY and more: who can join, how much, and what you get, explained simply.">
+<meta property="og:url" content="https://corpusnetworth.in/schemes">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Government Schemes for Savings and Insurance in India | CO₹PU$">
+<meta name="twitter:description" content="PPF, SSY, NPS, APY, PMJJBY, PMSBY and more: who can join, how much, and what you get, explained simply.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://corpusnetworth.in/#org","name":"CO₹PU$","alternateName":"Corpus","url":"https://corpusnetworth.in/","logo":"https://corpusnetworth.in/assets/icon-512.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://corpusnetworth.in/"},{"@type":"ListItem","position":2,"name":"Govt Schemes","item":"https://corpusnetworth.in/schemes"}]}]}</script>
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-guide="schemes">
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>Government Schemes</h1>
+      <p>Insurance, pension and EV benefits the government actually runs right now, with the numbers checked rather than assumed. Scheme terms change with each budget, so treat this as a starting point and confirm on the official portal before you rely on a figure here.</p>
+    </div>
+
+    <div class="card">
+      <h2>Insurance and Pension Schemes</h2>
+      <div id="insuranceList"></div>
+    </div>
+
+    <div class="card">
+      <h2>NPS, in Brief</h2>
+      <p>The National Pension System is the government's own retirement account, open to any citizen aged 18 to 70. Unlike PPF or EPF, there is no fixed declared rate, your money goes into a mix of equity, corporate debt and government securities funds that you choose, so the return moves with the market. Contributions to NPS Tier I qualify for tax deduction, including an extra ₹50,000 under Section 80CCD(1B) that sits on top of the regular ₹1.5 lakh Section 80C limit. You can track your own NPS account on the Assets page, it sits right alongside PPF and EPF there.</p>
+      <p style="margin-top:14px;"><a href="assets.html" class="btn secondary" style="text-decoration:none;">Go track your NPS</a> &nbsp; <a href="https://enps.nsdl.com" target="_blank" rel="noopener" class="btn secondary" style="text-decoration:none;">Open an NPS account (eNPS)</a></p>
+    </div>
+
+    <div class="card">
+      <h2>EV Ownership Benefits</h2>
+      <p class="hint" style="margin-top:0;">This area moves fast and is easy to get wrong, so here is exactly what is and is not true right now.</p>
+      <div id="evList"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script>
+const INSURANCE_SCHEMES = [
+  {
+    name: 'Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)',
+    what: 'A one year life cover of ₹2 lakh, paid to your nominee if you die from any cause, renewed every year.',
+    terms: 'Premium ₹436 a year, auto-debited from a bank or post office account. Open to ages 18 to 50, cover can continue to 55 as long as you keep renewing and paying.',
+    link: 'https://www.jansuraksha.gov.in/Forms-PMJJBY.aspx'
+  },
+  {
+    name: 'Pradhan Mantri Suraksha Bima Yojana (PMSBY)',
+    what: 'Accident cover: ₹2 lakh for accidental death or full disability, ₹1 lakh for partial disability.',
+    terms: 'Premium ₹20 a year, auto-debited. Open to ages 18 to 70.',
+    link: 'https://www.jansuraksha.gov.in/Forms-PMSBY.aspx'
+  },
+  {
+    name: 'Atal Pension Yojana (APY)',
+    what: 'A government-guaranteed monthly pension of ₹1,000 to ₹5,000 for life, starting at age 60, aimed at people with no formal pension cover.',
+    terms: 'Open to ages 18 to 40, but not to anyone who pays income tax. Your monthly contribution is fixed by your age and the pension amount you pick when you join, administered by PFRDA.',
+    link: 'https://npscra.nsdl.co.in/scheme-details.php'
+  },
+  {
+    name: 'Ayushman Bharat PM-JAY',
+    what: 'Cashless hospital cover of ₹5 lakh per family per year, with no cap on family size or age, at any empanelled public or private hospital.',
+    terms: 'Eligibility is based on the SECC deprivation and occupational criteria, roughly the bottom 40% of the population by that measure. Every senior citizen aged 70 and above now also qualifies for their own ₹5 lakh cover, on top of any family cover they already have, regardless of income.',
+    link: 'https://pmjay.gov.in'
+  }
+];
+
+const INSURANCE_LIST_BOX = document.getElementById('insuranceList');
+INSURANCE_SCHEMES.forEach(s => {
+  const div = document.createElement('div');
+  div.className = 'advice info';
+  div.innerHTML = `<h4>${s.name}</h4><p>${s.what}</p><p class="hint" style="margin-top:6px;">${s.terms}</p><p style="margin-top:8px;"><a href="${s.link}" target="_blank" rel="noopener" style="font-weight:600; color:var(--moss);">Official page →</a></p>`;
+  INSURANCE_LIST_BOX.appendChild(div);
+});
+
+const EV_ITEMS = [
+  {
+    level: 'good',
+    title: 'GST on every electric vehicle is 5%, with no extra cess',
+    text: 'This applies to EV cars, two-wheelers and three-wheelers alike, against 18% to 40% on a petrol or diesel car since the September 2025 GST reform. This is where most of the real saving actually sits, and it is simply built into the on-road price you are quoted.'
+  },
+  {
+    level: 'warn',
+    title: 'Section 80EEB is closed to new loans',
+    text: 'This income-tax deduction of up to ₹1.5 lakh on EV loan interest only ever applied to loans sanctioned on or before 31 March 2023. A lot of pages online still describe it as a live benefit, it is not, if your loan was sanctioned after that date you cannot claim it.'
+  },
+  {
+    level: 'info',
+    title: 'PM E-DRIVE does not subsidise private cars',
+    text: 'The central scheme that replaced FAME II, launched October 2024 with a ₹10,900 crore outlay, mainly funds electric two-wheelers, three-wheelers, e-buses, e-ambulances and charging infrastructure. If you are buying a private electric car, there is no direct central cash subsidy on it right now.'
+  },
+  {
+    level: 'info',
+    title: 'Road tax and registration waivers are a state subject',
+    text: 'Several states waive road tax and registration fees on EVs, sometimes fully, and a few still run a purchase subsidy, but the list and the amounts change often and some early schemes have already run out of their capped budget. Check your own state transport department\'s current EV policy before counting on a figure, rather than a number you saw online.'
+  }
+];
+
+const EV_LIST_BOX = document.getElementById('evList');
+EV_ITEMS.forEach(item => {
+  const div = document.createElement('div');
+  div.className = 'advice ' + item.level;
+  div.innerHTML = `<h4>${item.title}</h4><p>${item.text}</p>`;
+  EV_LIST_BOX.appendChild(div);
+});
+</script>
+<script src="js/guides.js"></script>
+<script src="js/guides-view.js"></script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

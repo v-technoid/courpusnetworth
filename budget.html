@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Monthly Budget Planner with 50/30/20 Check | CO₹PU$</title>
+<meta name="description" content="Plan your monthly budget: needs, wants and savings, your savings rate, and how you compare with the 50/30/20 guide. Fill it automatically from a bank statement. Private.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://corpusnetworth.in/budget">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Monthly Budget Planner with 50/30/20 Check | CO₹PU$">
+<meta property="og:description" content="Plan your monthly budget: needs, wants and savings, your savings rate, and how you compare with the 50/30/20 guide. Fill it automatically from a bank statement. Private.">
+<meta property="og:url" content="https://corpusnetworth.in/budget">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Monthly Budget Planner with 50/30/20 Check | CO₹PU$">
+<meta name="twitter:description" content="Plan your monthly budget: needs, wants and savings, your savings rate, and how you compare with the 50/30/20 guide. Fill it automatically from a bank statement. Private.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://corpusnetworth.in/#org","name":"CO₹PU$","alternateName":"Corpus","url":"https://corpusnetworth.in/","logo":"https://corpusnetworth.in/assets/icon-512.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://corpusnetworth.in/"},{"@type":"ListItem","position":2,"name":"Budget","item":"https://corpusnetworth.in/budget"}]}]}</script>
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>Budget</h1>
+      <p>A simple monthly plan: what comes in, where it goes, and how much you keep. Changes save as you type, and your savings rate feeds the health score on the dashboard.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-tile hero">
+        <div class="stat-label">You keep each month</div>
+        <div class="stat-num" id="bLeft">—</div>
+        <div class="stat-sub" id="bRate">&nbsp;</div>
+      </div>
+      <div class="stat-tile"><div class="stat-label">Take-home income</div><div class="stat-num" id="bIncome">—</div><div class="stat-sub">After tax, per month</div></div>
+      <div class="stat-tile"><div class="stat-label">Spending</div><div class="stat-num" id="bSpend">—</div><div class="stat-sub" id="bSpendSub">&nbsp;</div></div>
+    </div>
+
+    <div class="grid-2 budget-grid">
+      <div class="card">
+        <div class="card-head">
+          <h2>Your Month</h2>
+          <button type="button" class="secondary" id="bAdd">Add a line</button>
+        </div>
+        <label for="bIncomeIn">Monthly take-home income</label>
+        <input type="number" id="bIncomeIn" inputmode="numeric" placeholder="e.g. 95000">
+        <div class="budget-head" aria-hidden="true"><span>What</span><span>Type</span><span class="r">Per month</span><span></span></div>
+        <div id="bLines"></div>
+        <p class="hint" id="bEmiNote"></p>
+      </div>
+
+      <div>
+        <div class="card">
+          <div class="card-head"><h2>Needs, Wants and Savings</h2></div>
+          <p class="hint" style="margin-top:-6px;">A common starting guide is 50% on needs, 30% on wants and 20% saved. Treat it as a reference, not a rule.</p>
+          <div id="bSplit"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Where It Goes</h2><button class="link viz-toggle" id="bToggle" type="button"></button></div>
+          <div id="bBars"></div><div id="bTable"></div>
+        </div>
+        <div class="card">
+          <h2>Use These Numbers Elsewhere</h2>
+          <p class="muted" style="margin:0 0 12px;">Your spending without savings is <strong id="bEssential">—</strong> a month. Saving it as your monthly expense makes the emergency fund check, insurance calculator and health score more accurate.</p>
+          <button type="button" id="bUseExp">Use as my monthly expense</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/compute.js"></script>
+<script src="js/charts.js"></script>
+<script>
+(function(){
+  const TYPES = { need: 'Need', want: 'Want', savings: 'Saving' };
+  const DEFAULTS = [
+    ['Rent or home EMI', 'need'], ['Groceries and household', 'need'], ['Electricity, phone, internet', 'need'],
+    ['Transport and fuel', 'need'], ['Insurance premiums', 'need'], ['School or college fees', 'need'],
+    ['Eating out and entertainment', 'want'], ['Shopping', 'want'], ['Travel', 'want'], ['Subscriptions', 'want'],
+    ['SIPs and investments', 'savings'], ['Emergency fund top-up', 'savings'],
+  ];
+  const data = loadData();
+  let budget = data.budget && data.budget.items && data.budget.items.length ? data.budget
+    : { income: data.budget ? data.budget.income : '', items: DEFAULTS.map(([name, type]) => ({ id: uid(), name, type, amount: '' })) };
+
+  // suggest loan EMIs from the Liabilities page
+  const emiTotal = getComputed().loans.reduce((a, l) => a + (l.monthlyEmi || 0), 0);
+  if(emiTotal > 0) document.getElementById('bEmiNote').textContent = `Your loans on the Liabilities page come to ${fmtMoney(Math.round(emiTotal))} a month in EMIs. Include them in the lines above.`;
+
+  const save = () => { const d = loadData(); d.budget = budget; saveData(d); };
+  const lines = document.getElementById('bLines');
+
+  function renderLines(){
+    lines.innerHTML = budget.items.map(it => `
+      <div class="budget-row" data-id="${it.id}">
+        <input type="text" value="${escapeHtml(it.name)}" aria-label="What" data-f="name">
+        <select aria-label="Type" data-f="type">${Object.entries(TYPES).map(([k, v]) => `<option value="${k}"${it.type === k ? ' selected' : ''}>${v}</option>`).join('')}</select>
+        <input type="number" inputmode="numeric" value="${escapeHtml(it.amount)}" placeholder="0" aria-label="Per month" data-f="amount" class="r">
+        <button type="button" class="danger" aria-label="Remove ${escapeHtml(it.name)}" data-del>×</button>
+      </div>`).join('');
+  }
+
+  function totals(){
+    const income = Number(budget.income) || 0;
+    const by = { need: 0, want: 0, savings: 0 };
+    budget.items.forEach(i => by[i.type] = (by[i.type] || 0) + (Number(i.amount) || 0));
+    const spend = by.need + by.want;
+    const left = income - spend;
+    return { income, by, spend, left, rate: income > 0 ? left / income : 0, unplanned: income - spend - by.savings };
+  }
+
+  function renderSummary(){
+    const t = totals();
+    document.getElementById('bIncome').textContent = fmtCompact(t.income);
+    document.getElementById('bSpend').textContent = fmtCompact(t.spend);
+    document.getElementById('bSpendSub').textContent = t.income > 0 ? `${(t.spend / t.income * 100).toFixed(0)}% of income on needs and wants` : 'Add your income';
+    const left = document.getElementById('bLeft');
+    left.textContent = fmtMoney(Math.round(t.left));
+    left.classList.toggle('neg', t.left < 0);
+    document.getElementById('bRate').innerHTML = t.income > 0
+      ? `<span class="pill ${t.rate >= 0.2 ? 'moss' : t.rate >= 0.1 ? 'gold' : 'brick'}">${(t.rate * 100).toFixed(0)}% savings rate</span> ${t.unplanned > 0 ? escapeHtml(fmtCompact(t.unplanned)) + ' not yet given a job' : t.unplanned < 0 ? 'planned savings exceed what is left' : 'every rupee has a job'}`
+      : 'Enter your take-home income to begin';
+    document.getElementById('bEssential').textContent = fmtMoney(Math.round(t.spend));
+
+    // needs / wants / savings against the 50/30/20 guide
+    const guide = { need: 50, want: 30, savings: 20 };
+    const keep = Math.max(0, t.income - t.spend);
+    const actual = { need: t.by.need, want: t.by.want, savings: keep };
+    document.getElementById('bSplit').innerHTML = t.income > 0 ? Object.keys(guide).map(k => {
+      const pct = actual[k] / t.income * 100;
+      const off = k === 'savings' ? pct < guide[k] : pct > guide[k];
+      return `<div class="split-row">
+        <div class="split-top"><span>${k === 'need' ? 'Needs' : k === 'want' ? 'Wants' : 'Saved'}</span><span><strong>${pct.toFixed(0)}%</strong> <span class="hint" style="margin:0">guide ${guide[k]}%</span></span></div>
+        <div class="split-track"><span class="split-fill ${off ? 'off' : ''}" style="width:${Math.min(100, pct)}%"></span><span class="split-mark" style="left:${guide[k]}%"></span></div>
+        <div class="hint" style="margin:4px 0 0">${escapeHtml(fmtMoney(Math.round(actual[k])))} a month${off ? (k === 'savings' ? ', below the guide' : ', above the guide') : ''}</div>
+      </div>`;
+    }).join('') : '<p class="empty">Add your income to compare.</p>';
+
+    const rows = budget.items.filter(i => Number(i.amount) > 0).sort((a, b) => b.amount - a.amount);
+    const colorFor = { need: 'var(--series-1)', want: 'var(--series-2)', savings: 'var(--series-3)' };
+    CorpusCharts.hbars('bBars', rows.map(i => ({ label: i.name, sub: TYPES[i.type], value: Number(i.amount), color: colorFor[i.type] })), { compactValues: true, emptyText: 'Fill in a few amounts to see where your money goes.' });
+    CorpusCharts.table('bTable', [{ key: 'name', label: 'What' }, { key: 't', label: 'Type' }, { key: 'amount', label: 'Per month', num: true, format: v => fmtMoney(Number(v)) }, { key: 'pct', label: 'Of income', num: true }],
+      rows.map(i => ({ ...i, t: TYPES[i.type], pct: t.income > 0 ? (i.amount / t.income * 100).toFixed(1) + '%' : '—' })));
+  }
+
+  const incomeIn = document.getElementById('bIncomeIn');
+  incomeIn.value = budget.income || '';
+  incomeIn.addEventListener('input', () => { budget.income = incomeIn.value; save(); renderSummary(); });
+
+  lines.addEventListener('input', (e) => {
+    const row = e.target.closest('.budget-row'); if(!row) return;
+    const it = budget.items.find(i => i.id === row.dataset.id); if(!it) return;
+    it[e.target.dataset.f] = e.target.value; save(); renderSummary();
+  });
+  lines.addEventListener('change', (e) => { if(e.target.dataset.f === 'type') renderSummary(); });
+  lines.addEventListener('click', (e) => {
+    if(!e.target.matches('[data-del]')) return;
+    const id = e.target.closest('.budget-row').dataset.id;
+    budget.items = budget.items.filter(i => i.id !== id); save(); renderLines(); renderSummary();
+  });
+  document.getElementById('bAdd').addEventListener('click', () => {
+    budget.items.push({ id: uid(), name: '', type: 'want', amount: '' }); save(); renderLines();
+    const last = lines.querySelector('.budget-row:last-child input'); if(last) last.focus();
+  });
+  document.getElementById('bUseExp').addEventListener('click', () => {
+    const t = totals();
+    if(t.spend <= 0){ showToast('Fill in your spending first.'); return; }
+    updateSettings({ monthlyExpense: String(Math.round(t.spend)) });
+    showToast(`Monthly expense saved as ${fmtMoney(Math.round(t.spend))}.`);
+  });
+
+  CorpusCharts.toggle('bToggle', 'bBars', 'bTable');
+  renderLines(); renderSummary();
+})();
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

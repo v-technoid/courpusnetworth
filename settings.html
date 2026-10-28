@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Settings | CO₹PU$</title>
+<meta name="description" content="Your details, price keys, backup and restore.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://corpusnetworth.in/settings">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Settings | CO₹PU$">
+<meta property="og:description" content="Your details, price keys, backup and restore.">
+<meta property="og:url" content="https://corpusnetworth.in/settings">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Settings | CO₹PU$">
+<meta name="twitter:description" content="Your details, price keys, backup and restore.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>Settings</h1>
+      <p>A few numbers that help the reports be more useful, plus your backup and privacy controls.</p>
+    </div>
+
+    <div class="card">
+      <h2>Your Details</h2>
+      <div class="form-row">
+        <div>
+          <label for="country">Country</label>
+          <select id="country"></select>
+          <p class="hint" style="margin-top:6px;">Sets tax rules, account types, deadlines and complaint bodies.</p>
+        </div>
+        <div>
+          <label>Currency</label>
+          <select id="currency">
+            <option value="INR">Indian Rupee (₹)</option>
+            <option value="USD">US Dollar ($)</option>
+            <option value="EUR">Euro (€)</option>
+            <option value="GBP">British Pound (£)</option>
+            <option value="CAD">Canadian Dollar (C$)</option>
+            <option value="AUD">Australian Dollar (A$)</option>
+            <option value="SGD">Singapore Dollar (S$)</option>
+            <option value="AED">UAE Dirham (AED)</option>
+            <option value="NZD">New Zealand Dollar (NZ$)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Your age</label>
+          <input type="number" id="age" placeholder="Used for the reference allocation on Reports">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Average monthly expense</label>
+          <input type="number" id="monthlyExpense" placeholder="Used to check your emergency fund">
+        </div>
+        <div>
+          <label>Inflation assumption (% per year)</label>
+          <input type="number" id="inflation" step="0.1">
+        </div>
+      </div>
+      <button style="margin-top:16px;" onclick="saveSettings()">Save</button>
+    </div>
+
+    <div class="card" id="prices"></div>
+
+    <div class="card">
+      <h2>Your Data</h2>
+      <p class="hint" style="margin-top:0;">Everything you enter is stored only in this browser, on this device, using its built in local storage. Closing the tab does not lose it, but clearing your browser data will. Keep a backup file somewhere safe if this matters to you.</p>
+      <button onclick="exportData()">Download a backup file</button>
+      <button class="secondary" onclick="document.getElementById('importFile').click()">Restore from a backup file</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none;">
+      <p style="margin-top:26px;"><button class="danger" onclick="confirmClear()">Erase all data on this device</button></p>
+    </div>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/prices.js"></script>
+<script src="js/keys.js"></script>
+<script>
+(function(){
+  const sel = document.getElementById('country');
+  sel.innerHTML = CorpusCountry.list().map(P => `<option value="${P.code}">${P.name} (${P.symbol.trim()} ${P.currency})</option>`).join('');
+  sel.addEventListener('change', () => { document.getElementById('currency').value = CorpusCountry.get(sel.value).currency; });
+})();
+function loadIntoForm(){
+  const s = loadData().settings;
+  document.getElementById('country').value = CorpusCountry.current();
+  document.getElementById('currency').value = s.currency || 'INR';
+  document.getElementById('age').value = s.age || '';
+  document.getElementById('monthlyExpense').value = s.monthlyExpense || '';
+  document.getElementById('inflation').value = s.inflationAssumption ?? 6;
+  CorpusKeys.renderSettings(document.getElementById('prices'));
+}
+loadIntoForm();
+
+function toggleKeyVisibility(id, btn){
+  const input = document.getElementById(id);
+  if(input.type === 'password'){
+    input.type = 'text';
+    btn.textContent = 'Hide';
+  }else{
+    input.type = 'password';
+    btn.textContent = 'Show';
+  }
+}
+
+function saveSettings(){
+  const newCountry = document.getElementById('country').value;
+  const changed = newCountry !== CorpusCountry.current() || !CorpusCountry.isChosen();
+  updateSettings({
+    country: newCountry,
+    currency: document.getElementById('currency').value,
+    age: document.getElementById('age').value,
+    monthlyExpense: document.getElementById('monthlyExpense').value,
+    inflationAssumption: document.getElementById('inflation').value
+  });
+  showToast('Settings saved.');
+  if(changed){ document.documentElement.dataset.country = newCountry; setTimeout(() => location.reload(), 600); }
+}
+
+document.getElementById('importFile').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  importData(file, (ok) => {
+    if(ok){ showToast('Backup restored.'); loadIntoForm(); }
+    else{ showToast('That file could not be read.'); }
+  });
+});
+
+function confirmClear(){
+  if(confirm('This deletes every asset, loan and setting stored on this device. This cannot be undone unless you have a backup file. Continue?')){
+    clearAllData();
+    showToast('All data erased.');
+    loadIntoForm();
+  }
+}
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

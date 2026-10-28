@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Reports and advice | CO₹PU$</title>
+<meta name="description" content="Your full health check and where you may be losing money.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://corpusnetworth.in/reports">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Reports and advice | CO₹PU$">
+<meta property="og:description" content="Your full health check and where you may be losing money.">
+<meta property="og:url" content="https://corpusnetworth.in/reports">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reports and advice | CO₹PU$">
+<meta name="twitter:description" content="Your full health check and where you may be losing money.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head page-head-row">
+      <div>
+        <h1>Reports &amp; Advice</h1>
+        <p>A full health check based on the numbers you have entered, plus where you might be quietly losing money.</p>
+      </div>
+      <div class="head-actions">
+        <button type="button" data-pdf-report><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download PDF report</button>
+        <button type="button" class="secondary" id="printBtn">Print</button>
+      </div>
+    </div>
+    <div class="print-only print-head">
+      <div class="logo-word">CO<b>₹</b>PU<b>$</b></div>
+      <div id="printMeta"></div>
+    </div>
+
+    <div class="card">
+      <h2>Full Health Check</h2>
+      <div id="adviceList"></div>
+    </div>
+
+    <div class="card">
+      <h2>Where You Might Be Losing Money</h2>
+      <div id="lossList"></div>
+    </div>
+
+    <div class="card">
+      <h2>What to Pay Off First</h2>
+      <p class="hint" style="margin-top:0;">Sorted from the most expensive to the least expensive, since clearing the costliest debt first saves the most money over time.</p>
+      <div id="payoffList"></div>
+    </div>
+
+    <div class="card" id="allocCard" style="display:none;">
+      <h2>A Reference Starting Allocation</h2>
+      <p class="hint" style="margin-top:0;">A well known rule of thumb, not a personal recommendation, shown here as one reference point.</p>
+      <div class="grid-3" id="allocRef"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/compute.js"></script>
+<script src="js/advice.js"></script>
+<script src="js/report-pdf.js"></script>
+<script>
+const s = computeSummary();
+
+// full advice list
+const adviceBox = document.getElementById('adviceList');
+generateAdvice().forEach(a => {
+  const div = document.createElement('div');
+  div.className = 'advice ' + a.level;
+  div.innerHTML = `<h4>${a.title}</h4><p>${a.text}</p>`;
+  adviceBox.appendChild(div);
+});
+
+// losses: negative gain stocks/mf, and below-inflation fixed income
+const lossBox = document.getElementById('lossList');
+let lossFound = false;
+[...s.c.stocks, ...s.c.mf, ...s.c.gold, ...s.c.crypto, ...s.c.bonds].forEach(e => {
+  if(typeof e.gain === 'number' && e.gain < 0){
+    lossFound = true;
+    const div = document.createElement('div');
+    div.className = 'advice warn';
+    div.innerHTML = `<h4>${e.name} is currently below what you paid</h4><p>Invested ${fmtMoney(e.invested)}, worth ${fmtMoney(e.currentValue)} now, a loss of ${fmtMoney(Math.abs(e.gain))}. This alone is not a reason to sell, but it is worth knowing why it has dropped before adding more.</p>`;
+    lossBox.appendChild(div);
+  }
+});
+if(!lossFound){
+  lossBox.innerHTML = '<p class="empty">No individual holding is currently showing a loss against what you paid for it.</p>';
+}
+
+// payoff priority
+const payoffBox = document.getElementById('payoffList');
+const debtLike = [
+  ...s.c.loans.map(l => ({ name:l.name, rate:Number(l.rate)||0, balance:l.balance })),
+  ...s.c.debts.map(d => ({ name:d.name, rate:Number(d.rate)||0, balance:Number(d.amount)||0 }))
+].sort((a,b) => b.rate - a.rate);
+
+if(debtLike.length === 0){
+  payoffBox.innerHTML = '<p class="empty">No loans or debts on record.</p>';
+}else{
+  let html = '<table><thead><tr><th>Name</th><th class="num">Rate</th><th class="num">Balance</th></tr></thead><tbody>';
+  debtLike.forEach(d => {
+    html += `<tr><td>${d.name || 'Untitled'}</td><td class="num">${d.rate}%</td><td class="num">${fmtMoney(d.balance)}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  payoffBox.innerHTML = html;
+}
+
+// reference allocation
+if(s.c.settings.age){
+  document.getElementById('allocCard').style.display = 'block';
+  const ref = suggestAllocation(s.c.settings.age);
+  const box = document.getElementById('allocRef');
+  box.innerHTML = `
+    <div><div class="stat-label">Stocks &amp; mutual funds</div><div class="stat-num" style="font-size:22px;">${ref.equity}%</div></div>
+    <div><div class="stat-label">Debt (FD, RD, PPF, bonds)</div><div class="stat-num" style="font-size:22px;">${ref.debt}%</div></div>
+    <div><div class="stat-label">Gold</div><div class="stat-num" style="font-size:22px;">${ref.gold}%</div></div>
+  `;
+}
+</script>
+<script>
+document.getElementById('printBtn').addEventListener('click', () => {
+  const s = computeSummary();
+  document.getElementById('printMeta').textContent = `Net worth ${fmtMoney(Math.round(s.netWorth))}, assets ${fmtMoney(Math.round(s.totalAssets))}, liabilities ${fmtMoney(Math.round(s.totalLiabilities))}. Prepared ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}.`;
+  window.print();
+});
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

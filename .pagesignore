@@ -1,0 +1,21 @@
+# Files and folders that stay in GitHub but are NOT published to Cloudflare Pages.
+# Cloudflare has no ignore file of its own, so tools/publish.py reads this list
+# and copies everything else into dist/, which Cloudflare then serves.
+# One pattern per line. A trailing slash means a folder. * works as a wildcard.
+
+tools/
+dist/
+README.md
+.pagesignore
+.gitignore
+.git/
+.github/
+.vscode/
+.vercelignore
+vercel.json
+__pycache__/
+*.py
+*.pyc
+*.zip
+.DS_Store
+Thumbs.db

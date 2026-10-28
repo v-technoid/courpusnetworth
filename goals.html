@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Goals | CO₹PU$</title>
+<meta name="description" content="Your financial goals and the monthly SIP each one needs.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://corpusnetworth.in/goals">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Goals | CO₹PU$">
+<meta property="og:description" content="Your financial goals and the monthly SIP each one needs.">
+<meta property="og:url" content="https://corpusnetworth.in/goals">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Goals | CO₹PU$">
+<meta name="twitter:description" content="Your financial goals and the monthly SIP each one needs.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>Goals</h1>
+      <p>Turn a fuzzy ambition into an exact number: what it will actually cost by the time you need it, and what you need to set aside each month to get there. Every figure here is worked out from the amount, the time you give it, and a return you choose, nothing more.</p>
+    </div>
+
+    <div class="card">
+      <h2>Step 1: what will it really cost?</h2>
+      <p class="hint" style="margin-top:0;">Costs rise with inflation. A number that feels right today is usually too small for the day you actually need it.</p>
+      <div class="form-row">
+        <div><label>What this costs today</label><input type="number" id="g_today" value="2500000"></div>
+        <div><label>Years until you need it</label><input type="number" id="g_years" value="10"></div>
+      </div>
+      <label>Inflation to assume for this goal (% per year)</label>
+      <input type="number" id="g_inflation" value="7" step="0.1">
+      <button style="margin-top:16px;" onclick="runInflate()">Work out the future cost</button>
+      <div class="result-box" id="g_inflate_out" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Step 2: What to Set Aside Every Month</h2>
+      <p class="hint" style="margin-top:0;">Use the future cost from above, or type in a target of your own.</p>
+      <div class="form-row">
+        <div><label>Target amount</label><input type="number" id="g_target" value="4917000"></div>
+        <div><label>Years to reach it</label><input type="number" id="g_target_years" value="10"></div>
+      </div>
+      <div class="form-row">
+        <div><label>Expected annual return (%)</label><input type="number" id="g_return" value="11" step="0.1"></div>
+        <div><label>Amount you already have saved for this</label><input type="number" id="g_existing" value="0"></div>
+      </div>
+      <button style="margin-top:16px;" onclick="runSip()">Work out the monthly amount</button>
+      <div class="result-box" id="g_sip_out" style="display:none;"></div>
+      <p class="hint" id="useFutureCost" style="cursor:pointer; color:var(--moss); font-weight:600;">Use the future cost from Step 1 →</p>
+    </div>
+
+    <div class="card">
+      <h2>Check a Plan You Already Have</h2>
+      <p class="hint" style="margin-top:0;">If you already know what you can invest each month, this shows where that actually lands you, so you can see the gap before it is too late to close it.</p>
+      <div class="form-row">
+        <div><label>Monthly amount you can invest</label><input type="number" id="g_check_amount" value="15000"></div>
+        <div><label>Years you will keep investing</label><input type="number" id="g_check_years" value="10"></div>
+      </div>
+      <label>Expected annual return (%)</label>
+      <input type="number" id="g_check_return" value="11" step="0.1">
+      <button style="margin-top:16px;" onclick="runCheck()">See where this lands</button>
+      <div class="result-box" id="g_check_out" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Save Your Goals</h2>
+      <p class="hint" style="margin-top:0;">Give a goal a name and keep it here for reference, it does not affect your net worth on the Dashboard.</p>
+      <div class="form-row">
+        <div><label>Goal name</label><input type="text" id="g_name" placeholder="e.g. Daughter's college fund"></div>
+        <div><label>Monthly SIP needed</label><input type="number" id="g_save_sip"></div>
+      </div>
+      <div class="form-row">
+        <div><label>Target amount</label><input type="number" id="g_save_target"></div>
+        <div><label>Target year</label><input type="number" id="g_save_year"></div>
+      </div>
+      <button style="margin-top:10px;" onclick="saveGoal()">Save this goal</button>
+      <div id="goalList" style="margin-top:20px;"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/finance.js"></script>
+<script>
+function runInflate(){
+  const today = Number(document.getElementById('g_today').value)||0;
+  const years = Number(document.getElementById('g_years').value)||0;
+  const inflation = Number(document.getElementById('g_inflation').value)||0;
+  const future = inflationAdjustedGoal(today, inflation, years);
+  const box = document.getElementById('g_inflate_out');
+  box.style.display = 'block';
+  box.innerHTML = `<div class="stat-label">What this will cost in ${years} years</div><div class="num" style="font-size:24px;">${fmtMoney(future)}</div><p class="hint">Up from ${fmtMoney(today)} today, at ${inflation}% inflation. Carry this number into Step 2 below.</p>`;
+  document.getElementById('g_target').value = Math.round(future);
+  document.getElementById('g_target_years').value = years;
+}
+
+document.getElementById('useFutureCost').onclick = () => {
+  const box = document.getElementById('g_inflate_out');
+  if(box.style.display === 'none'){ showToast('Work out the future cost in Step 1 first.'); return; }
+};
+
+function runSip(){
+  const target = Number(document.getElementById('g_target').value)||0;
+  const years = Number(document.getElementById('g_target_years').value)||0;
+  const returnPct = Number(document.getElementById('g_return').value)||0;
+  const existing = Number(document.getElementById('g_existing').value)||0;
+  const sip = requiredMonthlySip(target, years, returnPct, existing);
+  const box = document.getElementById('g_sip_out');
+  box.style.display = 'block';
+  box.innerHTML = `<div class="stat-label">Monthly SIP needed</div><div class="num" style="font-size:26px;">${fmtMoney(sip)}</div><p class="hint">To reach ${fmtMoney(target)} in ${years} years at an assumed ${returnPct}% a year, on top of what you already have saved.</p>`;
+  document.getElementById('g_save_sip').value = Math.round(sip);
+  document.getElementById('g_save_target').value = target;
+  document.getElementById('g_save_year').value = new Date().getFullYear() + years;
+}
+
+function runCheck(){
+  const amount = Number(document.getElementById('g_check_amount').value)||0;
+  const years = Number(document.getElementById('g_check_years').value)||0;
+  const returnPct = Number(document.getElementById('g_check_return').value)||0;
+  const fv = sipFutureValue(amount, years, returnPct);
+  const invested = amount * years * 12;
+  const box = document.getElementById('g_check_out');
+  box.style.display = 'block';
+  box.innerHTML = `<div class="stat-label">Where this plan lands you</div><div class="num" style="font-size:26px;">${fmtMoney(fv)}</div><p class="hint">You will have put in ${fmtMoney(invested)} of your own money over ${years} years, the rest is growth at the return you assumed.</p>`;
+}
+
+function saveGoal(){
+  const name = document.getElementById('g_name').value.trim();
+  if(!name){ showToast('Give the goal a name first.'); return; }
+  addEntry('goals', {
+    name,
+    sip: document.getElementById('g_save_sip').value,
+    target: document.getElementById('g_save_target').value,
+    targetYear: document.getElementById('g_save_year').value
+  });
+  showToast('Goal saved.');
+  document.getElementById('g_name').value = '';
+  renderGoals();
+}
+
+function renderGoals(){
+  const goals = loadData().goals;
+  const box = document.getElementById('goalList');
+  if(goals.length === 0){ box.innerHTML = '<p class="empty">No goals saved yet.</p>'; return; }
+  let html = '<table><thead><tr><th>Goal</th><th class="num">Monthly SIP</th><th class="num">Target</th><th class="num">By year</th><th></th></tr></thead><tbody>';
+  goals.forEach(g => {
+    html += `<tr><td>${g.name}</td><td class="num">${fmtMoney(g.sip)}</td><td class="num">${fmtMoney(g.target)}</td><td class="num">${g.targetYear||'—'}</td><td class="row-actions"><button class="danger" data-del="${g.id}">Remove</button></td></tr>`;
+  });
+  html += '</tbody></table>';
+  box.innerHTML = html;
+  box.querySelectorAll('[data-del]').forEach(btn => {
+    btn.onclick = () => { removeEntry('goals', btn.dataset.del); renderGoals(); };
+  });
+}
+renderGoals();
+</script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

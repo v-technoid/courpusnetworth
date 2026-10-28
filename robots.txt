@@ -1,0 +1,8 @@
+# CO₹PU$ has no server-side data, so everything public is fine to crawl.
+# Personal screens (dashboard, assets...) carry a noindex tag instead of a block here,
+# so crawlers can still see that tag.
+User-agent: *
+Allow: /
+Disallow: /tools/
+
+Sitemap: https://corpusnetworth.in/sitemap.xml

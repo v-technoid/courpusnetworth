@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:start -->
+<title>Scholarships in India: Central and State Schemes | CO₹PU$</title>
+<meta name="description" content="Central and state scholarships for school and college students in India, with eligibility and where to apply.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://corpusnetworth.in/scholarships">
+<link rel="alternate" hreflang="en-IN" href="https://corpusnetworth.in/scholarships">
+<link rel="alternate" hreflang="en-US" href="https://corpusnetworth.in/us/student-aid">
+<link rel="alternate" hreflang="en-GB" href="https://corpusnetworth.in/uk/student-aid">
+<link rel="alternate" hreflang="en-CA" href="https://corpusnetworth.in/ca/student-aid">
+<link rel="alternate" hreflang="en-AU" href="https://corpusnetworth.in/au/student-aid">
+<link rel="alternate" hreflang="en-SG" href="https://corpusnetworth.in/sg/student-aid">
+<link rel="alternate" hreflang="en-AE" href="https://corpusnetworth.in/ae/student-aid">
+<link rel="alternate" hreflang="en-NZ" href="https://corpusnetworth.in/nz/student-aid">
+<link rel="alternate" hreflang="x-default" href="https://corpusnetworth.in/scholarships">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CO₹PU$">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Scholarships in India: Central and State Schemes | CO₹PU$">
+<meta property="og:description" content="Central and state scholarships for school and college students in India, with eligibility and where to apply.">
+<meta property="og:url" content="https://corpusnetworth.in/scholarships">
+<meta property="og:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CO₹PU$: every rupee you own, added up privately in your browser">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scholarships in India: Central and State Schemes | CO₹PU$">
+<meta name="twitter:description" content="Central and state scholarships for school and college students in India, with eligibility and where to apply.">
+<meta name="twitter:image" content="https://corpusnetworth.in/assets/og-image.png">
+<meta name="application-name" content="CO₹PU$">
+<meta name="apple-mobile-web-app-title" content="Corpus">
+<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://corpusnetworth.in/#org","name":"CO₹PU$","alternateName":"Corpus","url":"https://corpusnetworth.in/","logo":"https://corpusnetworth.in/assets/icon-512.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://corpusnetworth.in/"},{"@type":"ListItem","position":2,"name":"Scholarships","item":"https://corpusnetworth.in/scholarships"}]}]}</script>
+<!-- seo:end -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14111A" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="css/style.css">
+<script>try{var t=localStorage.getItem('corpus_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-guide="students">
+<div class="shell">
+  <aside class="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <h1>Scholarships</h1>
+      <p>A starting directory of real, official scholarship routes in India, organised by who they're for. This is a map to the right door, not a live listing, amounts and deadlines change every year, so always confirm details on the official page before you apply.</p>
+    </div>
+
+    <div class="card">
+      <div class="tabs" id="tabs"></div>
+      <input type="text" id="search" placeholder="Search by name or keyword" style="margin-bottom:18px;">
+      <div id="list"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/countries.js"></script>
+<script src="js/nav.js"></script>
+<script>
+const SCHOLARSHIPS = [
+  { name:'National Scholarship Portal (NSP)', cat:['general','sc-st-obc','minority'], level:'School to PG',
+    desc:'The Government of India\'s single sign-on gateway for most central and many state scholarship schemes, covering pre-matric, post-matric, and higher education support. Register once and it points you to what you\'re eligible for.',
+    url:'https://scholarships.gov.in' },
+  { name:'Central Sector Scheme of Scholarship (College & University students)', cat:['merit','general'], level:'UG',
+    desc:'A merit based scholarship for students who did well in Class 12 board exams and are pursuing regular undergraduate studies, applied for through NSP.',
+    url:'https://scholarships.gov.in' },
+  { name:'National Means-cum-Merit Scholarship (NMMSS)', cat:['merit','need'], level:'School (Class 9-12)',
+    desc:'For meritorious students from economically weaker families to prevent dropout at the secondary stage, administered through state education departments and NSP.',
+    url:'https://scholarships.gov.in' },
+  { name:'Pre-Matric and Post-Matric Scholarships for SC/ST/OBC students', cat:['sc-st-obc','need'], level:'School to PG',
+    desc:'Central and state government support for students from Scheduled Caste, Scheduled Tribe, and Other Backward Class backgrounds, applied for through NSP or your state\'s own portal.',
+    url:'https://scholarships.gov.in' },
+  { name:'Scholarships for Minority students', cat:['minority','need'], level:'School to PG',
+    desc:'Pre-matric, post-matric, and merit-cum-means schemes for students from notified minority communities, run by the Ministry of Minority Affairs through NSP.',
+    url:'https://scholarships.gov.in' },
+  { name:'Scholarships for students with disabilities', cat:['disability','need'], level:'School to PG',
+    desc:'Support for students with disabilities under the Department of Empowerment of Persons with Disabilities, applied for through NSP.',
+    url:'https://scholarships.gov.in' },
+  { name:'AICTE Pragati and Saksham Scholarships', cat:['girl','disability'], level:'UG (technical)',
+    desc:'AICTE\'s schemes for girl students (Pragati) and students with disabilities (Saksham) enrolled in technical diploma or degree courses.',
+    url:'https://www.aicte-india.org' },
+  { name:'UGC scholarships and fellowships', cat:['merit','research'], level:'PG & research',
+    desc:'The University Grants Commission runs several fellowship schemes for postgraduate and doctoral research, including for SC/ST/OBC and single girl child candidates.',
+    url:'https://www.ugc.gov.in' },
+  { name:'CBSE Single Girl Child Scholarship', cat:['girl','merit'], level:'School (Class 11-12)',
+    desc:'For girls who are the only child of their parents and scored well in the Class 10 CBSE board exam, to continue into Classes 11 and 12.',
+    url:'https://www.cbse.gov.in' },
+  { name:'Kendriya Sainik Board education scholarships', cat:['defence'], level:'School to PG',
+    desc:'Education assistance for wards of ex-servicemen and war widows, administered through the Kendriya Sainik Board and state Sainik Boards.',
+    url:'https://ksb.gov.in' },
+  { name:'Prime Minister\'s Scholarship Scheme (PMSS)', cat:['defence'], level:'UG & PG',
+    desc:'For wards of ex-servicemen, ex-coast guard personnel, and dependents of police/paramilitary personnel who died in action, covering professional degree courses.',
+    url:'https://ksb.gov.in' },
+  { name:'Sports Authority of India schemes', cat:['sports'], level:'School to UG',
+    desc:'Support for athletes identified through SAI\'s talent and training schemes; state sports departments also run their own athlete scholarships worth checking separately.',
+    url:'https://sportsauthorityofindia.nic.in' },
+  { name:'State DBT scholarship portals (example: MahaDBT, ePASS, e-Kalyan)', cat:['general','sc-st-obc'], level:'School to PG',
+    desc:'Most states run their own direct-benefit-transfer scholarship portal alongside NSP, MahaDBT for Maharashtra, ePASS for Telangana and Andhra Pradesh, e-Kalyan for Jharkhand and Bihar are examples. Search "[your state] scholarship portal" for yours.',
+    url:'https://mahadbt.maharashtra.gov.in' },
+  { name:'Buddy4Study', cat:['general', 'private'], level:'School to PG',
+    desc:'A private aggregator that lists thousands of government and privately funded scholarships together with eligibility filters, useful for discovering options you would not find searching one at a time.',
+    url:'https://www.buddy4study.com' },
+  { name:'Tata Trusts scholarships & fellowships', cat:['private','merit'], level:'UG to research',
+    desc:'A set of privately funded scholarships across education levels and fields, run by one of India\'s oldest philanthropic trusts.',
+    url:'https://www.tatatrusts.org' },
+  { name:'Aditya Birla Scholars Programme', cat:['private','merit'], level:'UG & PG',
+    desc:'A merit based scholarship for students at a defined list of top Indian institutes, run by the Aditya Birla Group.',
+    url:'https://www.adityabirlascholars.net' },
+  { name:'J.N. Tata Endowment', cat:['private','research'], level:'PG (abroad)',
+    desc:'Interest free loan-scholarships for Indians pursuing postgraduate study abroad, one of the longest running private schemes of its kind in India.',
+    url:'https://www.jntataendowment.org' },
+  { name:'Inlaks Shivdhani Scholarships', cat:['private','research'], level:'PG (abroad)',
+    desc:'Fully funded scholarships for outstanding Indian students to pursue postgraduate study at top universities abroad.',
+    url:'https://www.inlaksfoundation.org' },
+  { name:'Fulbright-Nehru Fellowships', cat:['international','research'], level:'PG & research (USA)',
+    desc:'US government funded fellowships for Indian students and scholars, administered in India by the United States-India Educational Foundation.',
+    url:'https://www.usief.org.in' },
+  { name:'Chevening Scholarships', cat:['international'], level:'PG (UK)',
+    desc:'UK government funded scholarships for one-year master\'s study in the United Kingdom, open to applicants worldwide including India.',
+    url:'https://www.chevening.org' },
+  { name:'Commonwealth Scholarships', cat:['international'], level:'PG & research (UK)',
+    desc:'UK government funded scholarships for citizens of Commonwealth countries, India included, for master\'s and doctoral study.',
+    url:'https://cscuk.fcdo.gov.uk' },
+  { name:'DAAD Scholarships', cat:['international'], level:'PG & research (Germany)',
+    desc:'The German Academic Exchange Service funds a wide range of scholarships for Indian students at German universities.',
+    url:'https://www.daad.de/en' }
+];
+
+const CATEGORIES = [
+  { key:'all', label:'All' },
+  { key:'general', label:'General' },
+  { key:'merit', label:'Merit' },
+  { key:'need', label:'Need Based' },
+  { key:'sc-st-obc', label:'SC / ST / OBC' },
+  { key:'minority', label:'Minority' },
+  { key:'girl', label:'Girl Child' },
+  { key:'disability', label:'Disability' },
+  { key:'defence', label:'Defence' },
+  { key:'sports', label:'Sports' },
+  { key:'research', label:'Research' },
+  { key:'private', label:'Private / Trust' },
+  { key:'international', label:'Study Abroad' }
+];
+
+let activeCat = 'all';
+
+function renderTabs(){
+  const wrap = document.getElementById('tabs');
+  wrap.innerHTML = '';
+  CATEGORIES.forEach(c => {
+    const b = document.createElement('button');
+    b.textContent = c.label;
+    b.className = c.key === activeCat ? 'active' : '';
+    b.onclick = () => { activeCat = c.key; renderTabs(); renderList(); };
+    wrap.appendChild(b);
+  });
+}
+
+function renderList(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const items = SCHOLARSHIPS.filter(s => {
+    const matchesCat = activeCat === 'all' || s.cat.includes(activeCat);
+    const matchesQ = !q || s.name.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q);
+    return matchesCat && matchesQ;
+  });
+  const box = document.getElementById('list');
+  if(items.length === 0){
+    box.innerHTML = '<p class="empty">Nothing matches that search or filter.</p>';
+    return;
+  }
+  box.innerHTML = items.map(s => `
+    <div class="advice info" style="border-left-color:var(--gold);">
+      <h4>${s.name} <span class="pill gold" style="margin-left:8px; font-weight:600;">${s.level}</span></h4>
+      <p>${s.desc}</p>
+      <p style="margin-top:8px;"><a href="${s.url}" target="_blank" rel="noopener" style="color:var(--moss); font-weight:600; text-decoration:none; border-bottom:1px solid var(--moss);">${s.url.replace('https://','')}</a></p>
+    </div>
+  `).join('');
+}
+
+document.getElementById('search').addEventListener('input', renderList);
+renderTabs();
+renderList();
+</script>
+<script src="js/guides.js"></script>
+<script src="js/guides-view.js"></script>
+<script>if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>
