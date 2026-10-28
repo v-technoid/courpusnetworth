@@ -403,7 +403,11 @@ def write_seo_files(url):
     open(os.path.join(ROOT, 'robots.txt'), 'w').write(f'''# CO₹PU$ has no server-side data, so everything public is fine to crawl.
 # Personal screens (dashboard, assets...) carry a noindex tag instead of a block here,
 # so crawlers can still see that tag.
+# Content Signals (contentsignals.org): search = search engines may list pages,
+# ai-input = AI assistants may read pages to answer questions and link here,
+# ai-train = pages may be used to train AI models.
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /tools/
 
