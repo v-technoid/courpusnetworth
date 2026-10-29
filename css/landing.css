@@ -65,7 +65,9 @@ html:has(body.lp){ overflow-x: hidden; scroll-behavior: smooth; }
 .lp-title .line:nth-child(3) > span{ animation-delay: .18s; }
 @keyframes lineUp{ to{ transform: none; } }
 
-.lp-sub{ font-size: 18px; line-height: 1.6; color: var(--ink-2); max-width: 50ch; margin: 26px 0 0; opacity: 0; animation: fadeIn .7s .45s var(--ease) forwards; }
+.lp-sub{ font-size: 18px; line-height: 1.6; color: var(--ink-2); max-width: 50ch; margin: 26px 0 0; animation: subRise .7s .2s var(--ease) backwards; }
+/* the line slides up but is never invisible, so it counts as painted straight away (LCP) */
+@keyframes subRise{ from{ transform: translateY(10px); } to{ transform: none; } }
 @keyframes fadeIn{ to{ opacity: 1; } }
 .lp-cta-row{ display:flex; align-items:center; gap: 22px; margin-top: 32px; flex-wrap: wrap; opacity: 0; animation: fadeIn .7s .6s var(--ease) forwards; }
 .lp-cta{ min-height: 52px; padding: 14px 26px; font-size: 16px; font-weight: 650; }
