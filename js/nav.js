@@ -252,6 +252,20 @@
   }
   window.corpusTogglePrivacy = () => applyPrivacy(!getPrivacy());
 
+  /* ---------- clean addresses ----------
+     Links in the files say "faq.html" so the site also opens straight from a folder.
+     On the live site (Cloudflare Pages) "faq.html" only redirects to "/faq", which costs a
+     round trip on every click, so just before a link is used it is pointed at "/faq" directly.
+     tools/publish.py does the same for links written in the HTML. */
+  if(/^https?:$/.test(location.protocol)){
+    const tidy = (e) => {
+      const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      if(!a || a.origin !== location.origin || !/\.html$/.test(a.pathname)) return;
+      a.pathname = a.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '');
+    };
+    ['pointerdown', 'focusin', 'click'].forEach(t => document.addEventListener(t, tidy, true));
+  }
+
   function currentPage(){
     let p = (location.pathname.split('/').pop() || 'index.html').split('?')[0].split('#')[0];
     if(p && !p.includes('.')) p += '.html';      // hosts that serve /about for about.html (Cloudflare Pages)

@@ -11,11 +11,21 @@ other file into dist/. Cloudflare's build settings are then:
 It only copies files, it does not rebuild pages, so the result is exactly
 what is committed. It also checks Cloudflare Pages' free plan limits.
 Needs only Python 3 (Cloudflare's build image has it)."""
-import fnmatch, os, shutil, sys
+import fnmatch, os, re, shutil, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'dist')
 MAX_FILES, MAX_BYTES, MAX_HEADER_RULES = 20000, 25 * 1024 * 1024, 100
+# Internal links are written as "faq.html" so the site also works opened from a folder.
+# Cloudflare Pages serves faq.html at /faq and redirects the .html address, so in the
+# published copy links point straight at /faq (index.html becomes the folder itself).
+LINK = re.compile(r'href="(?![a-z]+:|/|#)([A-Za-z0-9_./-]*?)([A-Za-z0-9_-]+)\.html((?:[#?][^"]*)?)"')
+def clean_links(html):
+    def fix(m):
+        folder, name, rest = m.group(1), m.group(2), m.group(3)
+        return f'href="{folder or ("./" if name == "index" else "")}{"" if name == "index" else name}{rest}"'
+    return LINK.sub(fix, html)
+
 MUST_HAVE = ['index.html', '404.html', '_headers', 'sw.js', 'robots.txt', 'sitemap.xml']
 
 def patterns():
@@ -54,7 +64,11 @@ def main():
                 problems.append(f'{rel} is over 25 MiB, Cloudflare Pages will refuse it')
             dst = os.path.join(OUT, rel)
             os.makedirs(os.path.dirname(dst), exist_ok=True)
-            shutil.copy2(src, dst)
+            if f.endswith('.html') and '--keep-html-links' not in sys.argv:
+                data = open(src, encoding='utf-8').read()
+                open(dst, 'w', encoding='utf-8').write(clean_links(data)); shutil.copystat(src, dst)
+            else:
+                shutil.copy2(src, dst)
             copied.append(rel)
     for m in MUST_HAVE:
         if m not in copied: problems.append(f'{m} is missing from the published files')

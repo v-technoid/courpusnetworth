@@ -235,6 +235,11 @@ https://corpusnetworth.in and deployed from GitHub.
    missing, if a file is over 25 MiB, or if `_headers` has over 100 rules.
    Run it locally to see exactly what will go live. `dist/` is in
    `.gitignore`, so it is never committed.
+   It also points internal links straight at clean addresses (`faq.html`
+   becomes `faq`, `us/index.html` becomes `us/`), saving a redirect on every
+   click; `js/nav.js` does the same for links built in the browser. The files
+   in the repo keep `.html` links so the site still opens from a folder.
+   Add `--keep-html-links` to skip this.
 4. Submit `https://corpusnetworth.in/sitemap.xml` in Google Search Console
    and Bing Webmaster Tools.
 
